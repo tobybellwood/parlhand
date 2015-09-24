@@ -1,0 +1,41 @@
+- fields: {base_model: 'parlhand:Person', limit: null, title: 'Parliamentary war service'}
+  model: data_interrogator.datatable
+  pk: 305
+- fields:
+    column_definition: name
+    header_text: Name
+    position: 0
+    table: 305
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: militaryservice.branch.name
+    header_text: Service
+    position: 1
+    table: 305
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: militaryservice.start_date
+    header_text: Start of Service
+    position: 2
+    table: 305
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: militaryservice.end_date
+    header_text: End of Service
+    position: 3
+    table: 305
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: notes
+    header_text: notes
+    position: 4
+    table: 305
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    ordering: -militaryservice.start_date
+    table: 305
+  model: data_interrogator.datatablepageorder
+- fields: 
+    filter_definition: count(militaryservice)>=1
+    table: 305
+  model: data_interrogator.datatablepagefilter

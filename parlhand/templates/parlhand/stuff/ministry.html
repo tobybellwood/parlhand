@@ -1,0 +1,185 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+{% load humanize %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}
+The {{ ministry.name }} Ministry
+<small>{{ministry.number|ordinal}} Australian Ministry</small>
+{% endblock %}
+
+{% block meta_title %}{{ministry.number|ordinal}} {{ ministry.name }} Ministry{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-xs-12">
+        <dl class="prior_later_ministry">
+        {% if prior_ministry %}
+            <dt>Preceeded by</dt>
+            <dd><a href="{{ prior_ministry.get_absolute_url }}">{{prior_ministry.number|ordinal}} {{ prior_ministry.name }} Ministry</a></dd>
+        {%endif %}
+        {% if later_ministry %}
+            <dt>Followed by</dt>
+            <dd><a href="{{ later_ministry.get_absolute_url }}">{{later_ministry.number|ordinal}} {{ later_ministry.name }} Ministry</a></dd>
+        {%endif %}
+        </dl>
+        <strong>Prime Minister:</strong> <a href='{{ ministry.prime_minister.get_absolute_url }}'>{{ ministry.prime_minister }}</a>
+        
+        {% if ministry.summary %}<div>{{ ministry.summary }}</div>{% endif %}
+        
+        
+        {% if parties.count > 1 %}
+        Participating parties:
+        <ul>
+            {% for party in parties %}
+            <li>{{party}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if cabinet %}
+        <h2>Cabinet</h2>
+        <ul class="responsive-columns">
+            {% regroup cabinet by position as cabinet_list %}
+            {% for set in cabinet_list %}
+            <li>
+            <h4><a href='{{set.grouper.get_absolute_url}}'>{{ set.grouper.label }}</a></h4>
+                <ul>
+                     {% for position in set.list %}
+                         {% with minister=position.person %}
+                        <li>
+                            {% if minister.image %}
+                                <img height="40px" src="{{ minister.image.url }}" ></img>
+                            {% endif %}
+                            <a href="{{ minister.get_absolute_url }}">{{ minister }}
+                            </a> -
+                            From {{ position.start_date|date:"d/m/Y" }}
+                            until
+                            {% if position.end_date %}
+                                {{ position.end_date|date:"d/m/Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                        </li>
+                        {% endwith %}
+                     {% endfor %}
+                </ul>
+            </li>
+             {% endfor %}
+        </ol>
+        {% endif %}
+
+        {% if outer %}
+        <h2>Outer Ministry</h2>
+        <ul class="responsive-columns">
+            {% regroup outer by position.label as outer_list %}
+            {% for set in outer_list %}
+            <li>
+            <h4><a href='{{set.grouper.get_absolute_url}}'>{{ set.grouper.label }}</a></h4>
+                <ul>
+                     {% for position in set.list %}
+                         {% with minister=position.person %}
+                        <li>
+                            {% if minister.image %}
+                                <img height="40px" src="{{ minister.image.url }}" ></img>
+                            {% endif %}
+                            <a href="{{ minister.get_absolute_url }}">{{ minister }}
+                            </a> -
+                            From {{ position.start_date|date:"d/m/Y" }}
+                            until
+                            {% if position.end_date %}
+                                {{ position.end_date|date:"d/m/Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                        </li>
+                        {% endwith %}
+                     {% endfor %}
+                </ul>
+            </li>
+             {% endfor %}
+        </ol>
+        {% endif %}
+        {% if parlsec %}
+        <h2>Parliamentary Secretaries</h2>
+        <ul class="responsive-columns">
+            {% regroup parlsec by position as parlsec_list %}
+            {% for set in parlsec_list %}
+            <li>
+            <h4><a href='{{set.grouper.get_absolute_url}}'>{{ set.grouper.label }}</a></h4>
+                <ul>
+                     {% for position in set.list %}
+                         {% with minister=position.person %}
+                        <li>
+                            {% if minister.image %}
+                                <img height="40px" src="{{ minister.image.url }}" ></img>
+                            {% endif %}
+                            <a href="{{ minister.get_absolute_url }}">{{ minister }}
+                            </a> -
+                            From {{ position.start_date|date:"d/m/Y" }}
+                            until
+                            {% if position.end_date %}
+                                {{ position.end_date|date:"d/m/Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                        </li>
+                        {% endwith %}
+                     {% endfor %}
+                </ul>
+            </li>
+             {% endfor %}
+        </ol>
+        {% endif %}
+    </div>
+        {% comment %}
+        <h3>Interactive Timeline</h3>
+        <div id="visualization"></div>
+        {% endcomment %}
+</div>
+{% comment %}
+<script>
+    var items = [];
+
+        {% for k,v in concurrent_ministry_data.items %}
+            {% with minister=k.0 %}
+    
+              var item5 = document.createElement('div');
+              item5.appendChild(document.createTextNode("{{ minister.name|safe }} - {{ v|join:"," }}"));
+
+            items.push(
+                {id: 'min_{{forloop.counter}}', content: item5,
+                    start: "{{ k.2 }}", end: "{{ k.3 }}",
+                    type: '', className: 'party_{{ minister.partymembership_set.first.party.code }}',
+                    group: '{{ k.1 }}' || 'Outer'}
+            )
+            {% endwith %}
+
+        {% endfor %}
+
+  items = new vis.DataSet(items);
+  var groups = new vis.DataSet([
+      {% if cabinet %}{id: 'Cabinet', content: 'Cabinet'},{% endif %}
+      {% if inner %}{id: 'Inner', content: 'Inner'},{% endif %}
+      {% if outer %}{id: 'Outer', content: 'Outer'},{% endif %}
+      {id: 'Parliamentary Secretary', content: 'Parliamentary Secretary'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    // start: '{{person.first_event.start_date|date:"Y-m-d"}}',
+    // end: '{{person.date_of_death|end_or_today|date:"Y-m-d"}}',
+    zoomMin: 1000 * 60 * 60 * 24 * 7, //One week in milliseconds
+    editable: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+{% endcomment %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ parliament.name }}{% endblock %}
+{% block meta_title %}{{ parliament.name }}{% endblock %}
+
+{% block main %}
+<div class="parl">
+    <dl>
+        <dt>Election date:</dt> <dd>{{parliament.election_date}}</dd>
+        <dt>Founded:</dt> <dd>{{parliament.founding_date}}</dd>
+        {% if parliament.dissolution_date %}
+        <dt>Ceased:</dt> <dd>{{parliament.dissolution_date}}</dd>
+        {% endif %}
+    </dl>
+    <p>{{parliament.summary}}</p>
+    <p>{{parliament.description}}</p>
+    
+<h3>Federal Representatives</h3>
+<ul>
+     {% for member in parliament.parliamentmembership_set.all %}
+        <li>
+            <a href="{% url 'parlhand:parliamentarian' member.person.pk %}">{{ member.person.name }}</a>
+        </li>
+     {% endfor %}
+</ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}Electorate of {{ electorate.label }}{% endblock %}
+{% block meta_title %}Electorate of {{ electorate.label }}{% endblock %}
+
+{% block main %}
+<div class="parl">
+    
+<h3>Interactive Timeline</h3>
+<div id="visualization"></div>
+
+<h3>Representative history</h3>
+<ul>
+     {% for seat in electorate.service_set.all %}
+        <li>
+            {{ seat.seat_type }}: 
+            <a href="{% url 'parlhand:parliamentarian' seat.person.pk %}">{{ seat.person.name }}</a> -
+            From {{ seat.start_date }} ({{ seat.start_reason }}) until
+            {% if seat.end_date %}
+                {{ seat.end_date }} ({{ seat.end_reason }})
+            {% else %}
+                Present
+            {% endif %}
+        </li>
+     {% endfor %}
+</ul>
+
+<script>
+  var items = new vis.DataSet([
+    {% for service in electorate.service_set.all %}
+        {id: 'serv_{{service.pk}}', content: '{{ service.person.name }}',
+            start: '{{service.start_date|date:"Y-m-d"}}', end: '{{service.end_date|end_or_today|date:"Y-m-d"}}',
+            type: '', className: 'service_{{ service.seat_type }}', group: 'service'},
+        {id: 'serv_{{service.pk}}_st', content: 'Elected {{ service.start_reason }}',
+            start: '{{service.start_date|date:"Y-m-d"}}',
+            group: 'service', className: 'major'},
+        {% if service.end_date %}
+        {id: 'serv_{{service.pk}}_end', content: '{{ service.end_reason }}',
+            start: '{{service.end_date|date:"Y-m-d"}}',
+            group: 'service', className: 'major'},
+        {% endif %}
+    {% endfor %}
+
+    {% for service in electorate.service_set.all %}
+    {id: 'mem_{{service.pk}}', content: '{{ service.person.partymembership_set.first.party.name }}',
+        start: '{{service.start_date|date:"Y-m-d"}}', end: '{{service.end_date|end_or_today|date:"Y-m-d"}}',
+        type: 'background',
+        className: 'party_{{ service.person.partymembership_set.first.party.code }}', group: 'party'},
+    {% endfor %}
+
+  ]);
+
+  var groups = new vis.DataSet([
+    {id: 'service', content: 'Service'},
+    {id: 'party', content: 'Party'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    // start: '{{person.first_event.start_date|date:"Y-m-d"}}',
+    // end: '{{person.date_of_death|end_or_today|date:"Y-m-d"}}',
+    zoomMin: 1000 * 60 * 60 * 24 * 7, //One week in milliseconds
+    editable: false,
+    //stack: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+</div>
+
+{% endblock %}

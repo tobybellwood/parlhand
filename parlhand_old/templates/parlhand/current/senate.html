@@ -1,0 +1,31 @@
+{% extends 'parlhand/base.html' %}
+
+{% block meta_title %}Current Senators{% endblock %}
+{% block title %}Current Senators{% endblock %}
+
+{% block main %}
+
+<img class="img-responsive center-block" src="http://www.aph.gov.au/~/media/05%20About%20Parliament/52%20Sen/527%20Photo%20array%20images/senate_chamber_1.jpg">
+<table class="table">
+<thead>
+    <tr>
+        <td>Name</td>
+        <td>State</td>
+        <td>Party</td>
+    </tr>
+</thead>
+<tbody>
+    {% for senator in parliamentarians %}
+    <tr>
+        <td>
+            {% if senator.picture %}
+                <img height="40px" src="{{ senator.picture.url }}" ></img>
+            {% endif %}
+            <a href="{% url 'parliamentarian' senator.phid %}">{{ senator.full_name }}</a></td>
+        <td>{{ senator.current_seat.electorate.name }}</td>
+        <td>{{ senator.current_party }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,20 @@
+DisplayOrder,Name,DisplayTitle
+0,parliamentary.service,Parliamentary Service
+3,parliamentary.appointments,Parliamentary Appointments
+5,parliamentary.positions,Parliamentary Positions
+10,acting.ministries,Acting Ministries
+20,ministerial.appointments,Ministerial Appointments
+30,committee.service,Committee Service
+40,conf.delegations.visits,Conferences, Delegations and Visits
+50,parliamentary.party.positions,Parliamentary Party Positions
+60,party.positions,Party Positions
+70,other.positions,Other Positions
+80,personal,Personal
+90,quals.work.pre.parliament,Qualifications and Occupation before entering Federal Parliament
+95,decorations,Decorations
+100,local.gov.service,Local Government Service
+110,honours,Honours
+120,publications,Publications
+130,military.service,Military Service
+140,electorate,Electorate
+150,misc.info,Miscellaneous Information

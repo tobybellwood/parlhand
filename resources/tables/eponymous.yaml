@@ -1,0 +1,33 @@
+- fields: {base_model: 'parlhand:Person', limit: null, title: Eponymous Parties}
+  model: data_interrogator.datatable
+  pk: 303
+- fields:
+    column_definition: name
+    header_text: Name
+    position: 0
+    table: 303
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: partymembership.party.name
+    header_text: Eponymous Party
+    position: 1
+    table: 303
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: partymembership.party.founding_date
+    position: 2
+    table: 303
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: partymembership.party.dissolution_date
+    position: 3
+    table: 303
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    ordering: partymembership.party.founding_date
+    table: 303
+  model: data_interrogator.datatablepageorder
+- fields: 
+    filter_definition: partymembership.party.name__icontains==family_name
+    table: 303
+  model: data_interrogator.datatablepagefilter

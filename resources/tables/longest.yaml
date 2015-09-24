@@ -1,0 +1,35 @@
+- fields: {base_model: 'parlhand:Person', limit: 25, title: Longest serving parliamentarians}
+  model: data_interrogator.datatable
+  pk: 200
+- fields: {column_definition: name, header_text: Name, position: 0, table: 200}
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: length_of_service
+    header_text: Length of Service (days)
+    position: 0
+    table: 200
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: concat(service.electorate.label)
+    header_text: Electorate(s)
+    position: 1
+    table: 200
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: min(service.start_date)
+    header_text: Start date
+    position: 2
+    table: 200
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: max(service.end_date)
+    header_text: End date
+    position: 3
+    table: 200
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    filter_definition: length_of_service>10000
+    table: 200
+  model: data_interrogator.datatablepagefilter
+- fields: {ordering: -length_of_service, table: 200}
+  model: data_interrogator.datatablepageorder

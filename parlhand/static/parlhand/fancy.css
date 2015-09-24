@@ -1,0 +1,126 @@
+@import url(https://fonts.googleapis.com/css?family=Neuton:400,300);
+@import url(https://fonts.googleapis.com/css?family=Carrois+Gothic);
+
+body {
+    font-family: 'Carrois Gothic', sans-serif;
+}
+h1,h2,h3,h4 {
+    font-family: 'Neuton', serif;
+    text-shadow: 1px 1px #CECECE;
+}
+h1 a,h2 a,h3 a,h4 a {
+    color:black;
+}
+strong,b,label {
+    font-family: 'Neuton', serif;
+    font-size:125%;
+}
+
+nav.main.navbar {
+    font-family: 'Neuton', serif;
+    font-size:125%;
+}
+
+nav.main.navbar > li {
+    text-shadow: 1px 1px #555;
+}
+
+nav.main.navbar > ul {
+    text-shadow: initial;
+    font-size:135%;
+}
+/*.active {
+    color:red;
+}*/
+
+/* External links - http://stackoverflow.com/questions/26898931 */
+a[href^=http]::after{
+    font-family:'FontAwesome';
+    content:' \f08e';
+    font-size:80%;
+}
+
+#spymenu {
+    padding:0;
+    margin:0;
+    border:none;
+}
+#spymenu a {
+    font-size:90%;
+    color:#222;
+}
+#spymenu a:hover {
+    background:inherit;
+}
+#spymenu a:hover:before {
+    content:"\203A";
+}
+#spymenu ul ul {
+    padding-left:4px;
+}
+#spymenu > ul {
+    margin-top:-80px;
+}
+
+#spymenu a {
+    border-radius:0px;
+}
+#spymenu li.active a {
+    background-color:#EEE;
+}
+#spymenu li.active a:before {
+    content:"\203A";
+}
+.scrollwatch {
+    position: relative;
+}
+
+.portrait {
+    margin-top:50px;
+    padding:7px;
+    background-color:rgba(200, 200, 200, 0.5);
+}
+.portrait > * {
+    padding-left:8px;
+    padding-right:8px;
+    display:block;
+    margin:auto;
+    text-align:center;
+    word-wrap: break-word;
+}
+.portrait-mobile {
+    margin:auto;
+    width:150px;
+    position:relative;
+    top:-120px;
+    margin-bottom:-130px;
+}
+.portrait-mobile .portrait {
+    margin-top:0px;
+}
+
+#nav_ministries ul li span {
+    padding-left:2em;
+    display:block;
+}
+
+@media (min-width: 768px) {
+    /* Only split committees on big screens */
+    .responsive-columns {
+        -webkit-columns:2;
+        -moz-columns:2;
+        columns:2;
+    }
+    
+    .responsive-columns li {
+        display:inline-block;
+    }
+}
+@media (min-width: 1200px) {
+    /* Only split committees on big screens * /
+    .responsive-columns {
+        -webkit-columns:3;
+        -moz-columns:3;
+        columns:3;
+    }/**/
+}

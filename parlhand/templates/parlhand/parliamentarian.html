@@ -1,0 +1,434 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+{% load humanize %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+  <link href="/dyncss/party.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block meta_title %}{{ person.name }}{% endblock %}
+{% block title %}
+<span class="hidden-xs">
+    {{ person.name }}
+    {% if person.preferred_name and person.preferred_name != person.first_names %}({{ person.preferred_name }}){% endif %}
+    {{ person.surname }}
+    <small>{{ person.honorific_suffix }}</small></span>
+{% endblock %}
+{% block subtitle %}{{ person.summary }}{% endblock %}
+{% block lead_type %}lead_member{% endblock %}
+
+{% block main %}
+    {% if person.image %}
+    <div class="portrait-mobile visible-xs-block">
+        <div class="portrait">
+            <img src="{{ person.image.url }}" height="150px">
+            <a href="#top"><strong>{{ person.name }}</strong></a>
+        </div>
+    </div>
+    {% endif %}
+
+    <h2>
+    {% if person.current_seat %}
+        Current <a href="{}" title="Click for current member details">
+            {{ person.current_seat.seat_type }} for {{ person.current_seat.electorate }}
+            {% if person.current_seat.chamber.title = "MMember" %}, {{ person.current_seat.electorate.state }}{% endif %}</a>
+    {% else %}
+        Former parliamentarian
+    {% endif %}
+    </h2>
+    {% if person.summary %}
+    <small>- {{ person.summary }}</small>
+    {% endif %}
+<div class="row">
+    <nav id="spymenu" class="col-sm-2 pull-right">
+      <ul class="nav nav-pills nav-stacked hidden-xs affix"
+        data-spy="affix" >
+        <li>
+            <div class="portrait">
+            {% if person.image %}
+                <img src="{{ person.image.url }}" height="150px">
+            {% else %}
+                <img src="" height="150px">
+            {% endif %}
+            <a href="#top"><strong>{{ person.name }}</strong></a>
+            </div>
+        </li>
+        <li>
+          <a href="#nav_biography">Biography</a>
+        </li>
+        <li>
+          <a href="#nav_electoral">Electoral</a>
+        </li>
+        <li>
+          <a href="#nav_party">Party membership</a>
+        </li>
+        {% if person.ministerialappointment_set.count > 0 %}<li>
+          <a href="#nav_ministries">Ministries</a>
+        </li>{% endif %}
+        {% if person.committeemembership_set.count > 0 %}<li>
+          <a href="#nav_committees">Committees</a>
+        </li>{% endif %}
+        {% if person.chamberappointment_set.count > 0 %}<li>
+          <a href="#nav_chamber">Chamber appointments</a>
+        </li>{% endif %}
+        {% if person.militaryservice_set.count > 0 %}<li>
+          <a href="#nav_military">Military</a>
+        </li>{% endif %}
+        {% if person.statutoryappointment_set.count > 0 %}<li>
+          <a href="#nav_stat_appt">Appointments</a>
+        </li>{% endif %}
+        {% if person.addendum_set.count > 0 %}<li>
+          <a href="#nav_addendum">Addendum</a>
+        </li>{% endif %}
+        <li>
+          <a href="#nav_timeline">Timeline</a>
+        </li>
+      </ul><!-- end of main navigation -->
+    </nav>
+    <div class="col-sm-10 scrollwatch">
+        <section id="nav_biography">
+            <h2>Biography</h2>
+            <strong>
+            {% spaceless %}
+            {{ person.honorific_prefix | title }}
+            {{ person.given_name }}
+            {{ person.additional_name }}
+            {{ person.family_name }}
+            {{ person.honorific_suffix }}
+            {% endspaceless %}
+            </strong>
+            <p>Born: {% confidence_date person.birth %}, {{ person.place_of_birth }}</p>
+            {% if person.death_date %}
+                <p>Died: {% confidence_date person.death %}</p>
+            {% endif %}
+            <p>{{ person.biography }}</p>
+        </section>
+        
+        <section id="nav_electoral">
+        <h3>Electoral history</h3>
+        Length of service:
+            {% if person.length_of_service %} {{ person.length_of_service|days_to_years }} {% endif %}
+            {% regroup person.service_set.all by chamber.level as servicelist %}
+            {% for set in servicelist %}
+            <h4>{{ set.grouper }}</h4>
+            <ul>
+                 {% for seat in set.list %}
+                    <li>
+                        <a href="{% url 'parlhand:electorate' seat.electorate.id %}">
+                        {% if seat.seat_type %}
+                            {{ seat.seat_type }} for {{ seat.electorate }}
+                        {% else %}
+                            {{ seat.electorate }} [{{seat.chamber.name}}]
+                        {% endif %}
+                        </a> -
+                        From {{ seat.start_date|date:"d/m/Y" }}
+                        {% if seat.start_reason %}({{ seat.start_reason }}){% endif %}
+                        until
+                        {% if seat.end_date %}
+                            {{ seat.end_date|date:"d/m/Y" }}
+                            {% if seat.end_reason %}({{ seat.end_reason }}){% endif %}
+                        {% else %}
+                            Present
+                        {% endif %}
+                    </li>
+                 {% endfor %}
+            </ul>
+             {% endfor %}
+        </section>
+        
+        <section id="nav_party">
+        <h3>Party history</h3>
+        <ul>
+            {% for membership in person.partymembership_set.all %}
+                <li>
+                    <a href='{{membership.party.get_absolute_url}}'>{{ membership.party.name }}</a>:
+                    {% date_range membership.start_date membership.end_date sep="-" %}
+                </li>
+            {% empty %}
+                <li>Independent</li>
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for position in person.partyposition_set.all %}
+            <li id="partypos_{{position.pk}}">
+                {{ position.position }}: from
+                {{position.start_date}} - {{position.end_date}}
+            </li>
+            {% endfor %}
+        </ul>
+        </section>
+        
+        {% if person.ministerialappointment_set.count > 0 %}
+        <section id="nav_ministries">
+        <h3>Ministerial Appointments</h3>
+        <ul class="responsive-columns">
+            {% comment %}
+                Regroup doesn't sort, so if the objects are pulled from the database
+                in the wrong order this won't work properly.
+                If this list comes out wrong, double check the default ordering
+                of CommitteeMembership in parlhand/models.py
+            {% endcomment %}
+            {% regroup person.ministerialappointment_set.all by ministry as min_list %}
+            {% for min_group in min_list %}
+            <li>{% if min_group.grouper.name == person.family_name %}
+                    Led the
+                {% else %}
+                    Served in the
+                {% endif %}
+                <a href="{{ min_group.grouper.get_absolute_url }}">{{ min_group.grouper.number|ordinal }} {{ min_group.grouper }} Ministry</a>
+                <ul>
+                    {% for comm in min_group.list %}
+                    <li id="min_{{comm.pk}}">
+                    <a href="{% url 'parlhand:ministerialposition' comm.position.id %}">{{ comm.position.label }}</a>
+                    From {% date_range comm.start_date comm.end_date %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+
+        {% if person.chamberappointment_set.count > 0 %}
+        <section id="nav_chamber">
+        <h3>Chamber appointments</h3>
+        <ul>
+            {% for appt in person.chamberappointment_set.all %}
+                <li>
+                    {{ appt.position.label }}
+                    {% if appt.chamber.name not in appt.position.label %}in the {{ appt.chamber.name }}{% endif %},
+                    {{ appt.start_date }} - {{ appt.end_date }}
+                </li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+
+        {% if person.militaryservice_set.count > 0 %}
+        <section id="nav_military">
+        <h3>Military service</h3>
+        <ul>
+            {% for mil_service in person.militaryservice_set.all %}
+                <li>
+                    {{ mil_service.role }} in the {{ mil_service.branch.name}} {% date_range mil_service.start_date mil_service.end_date sep="-" %}
+                    {% if mil_service.notes %}
+                    <br>{{ mil_service.notes }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+
+        {% if person.committeemembership_set.count > 0 %}
+        <section id="nav_committees">
+        <h3>Committee Memberships</h3>
+        <ul class="responsive-columns">
+            {% comment %}
+                Regroup doesn't sort, so if the objects are pulled from the database
+                in the wrong order this won't work properly.
+                If this list comes out wrong, double check the default ordering
+                of CommitteeMembership in parlhand/models.py
+            {% endcomment %}
+            {% regroup person.committeemembership_set.all by committee.name as comms_list %}
+            {% for comm_group in comms_list %}
+            <li><a href="{{ comm_group.list.0.committee.get_absolute_url }}">{{ comm_group.list.0.committee.type }}: {{ comm_group.grouper }}</a>
+                <ul>
+                    {% for comm in comm_group.list %}
+                    <li id="com_{{comm.pk}}">
+                    From {% date_range comm.start_date comm.end_date %}
+                    {% if comm.notes %}[{{ comm.notes }}]{% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+        
+        {% if person.statutoryappointment_set.count > 0 %}
+        <section id="nav_stat_appt">
+        <h3>Statutory Appointments</h3>
+        <ul>
+            {% for appt in person.statutoryappointment_set.all %}
+                <li>
+                    {{appt.position.label }} From {% date_range appt.start_date appt.end_date %}
+                </li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+
+        {% if person.addendum_set.count > 0 %}
+        <section id="nav_addendum">
+        <h3>Addendum</h3>
+        <ul>
+            {% for extra in person.addendum_set.all %}
+                <li>
+                    ({{ extra.type }})
+                    {{ extra.description|safe }} {% if extra.url %}<a href="{{extra.url}}">[Details]</a>{% endif %}
+                    {% if extra.people.count > 1 %}
+                        <br>
+                        <small>See also:
+                        {% for other in extra.people.all %}
+                            {% if not forloop.first %},{% endif %}
+                            {% if other != person %}
+                                <a href="{% url 'parlhand:parliamentarian' phid=other.phid %}">{{ other.name }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </small>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+        
+        <section id="nav_timeline">
+            <h3>Interactive Timeline</h3>
+            <p>Click on the timeline to zoom in/out and scroll.</p>
+            <div id="visualization"></div>
+        </section>
+
+        {% if person.links.count > 0 %}
+        <section id="nav_links">
+        <h3>Links and references</h3>
+        <ul class="">
+            {% for link in person.links.all %}
+            <li><a href="{{ link.url }}">{{ link.note }}</a></li>
+            {% endfor %}
+        </ul>
+        </section>
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+<script>
+  var items = new vis.DataSet([{% spaceless %}
+    {% for service in person.service_set.all %}
+        {% if service.seat_type %}
+            {id: 'serv_{{service.pk}}_b',
+                content: ' ',
+                start: '{{service.start_date|date:"Y-m-d"}}', end: '{{service.end_date|date:"Y-m-d"}}' || Date(),
+                type: 'background', className: 'service_{{ service.seat_type }}', group: 'service'},
+            {id: 'serv_{{service.pk}}_f',
+                content: '{{ service.seat_type }}: {{ service.electorate.label }}',
+                start: '{{service.start_date|date:"Y-m-d"}}', end: '{{service.end_date|date:"Y-m-d"}}' || Date(),
+                type: 'range', className: 'service_{{ service.seat_type }}', group: 'service'},
+        {% else %}
+            {id: 'serv_{{service.pk}}',
+                content: '{{ service.electorate.label }}<br>{{ service.chamber.name }}',
+                start: '{{service.start_date|date:"Y-m-d"}}', end: '{{service.end_date|date:"Y-m-d"}}' || Date(),
+                type: '', className: 'service_{{ service.seat_type }}', group: 'service'},
+        {% endif %}
+    {% endfor %}
+    {% for service in person.service_set.all %}
+        {% if service.start_reason %}
+            {id: 'serv_{{service.pk}}_st', content: 'Elected {{ service.start_reason }}',
+                start: '{{service.start_date|date:"Y-m-d"}}',
+                type: '', group: 'service', className: 'major'},
+            {% endif %}
+        {% if service.end_date and service.end_reason %}
+            {id: 'serv_{{service.pk}}_end', content: '{{ service.end_reason }}',
+                start: '{{service.end_date|date:"Y-m-d"}}',
+                group: 'service', className: 'major'},
+            {% endif %}
+    {% endfor %}
+    {% for ministerial in person.ministerialappointment_set.all %}
+    {id: 'min_{{ministerial.pk}}', content: '<a href="#min_{{ministerial.pk}}">{{ ministerial.position.label }}</a>',
+        start: '{{ ministerial.start_date|date:"Y-m-d"}}',
+        end: '{{ ministerial.end_date|date:"Y-m-d"}}' || Date(),
+        group: 'service', className: 'ministerial'},
+    {% endfor %}
+
+    {% for committee in person.committeemembership_set.all %}
+    {id: 'com_{{committee.pk}}', content: '<a href="#com_{{committee.pk}}">{{ committee.committee.name }}<br>{{ committee.committee.type }}</a>',
+        start: '{{committee.start_date|date:"Y-m-d"}}', end: '{{committee.end_date|date:"Y-m-d"}}' || Date(),
+        group: 'committees', className: 'committee'},
+    {% endfor %}
+
+    {% for membership in person.partymembership_set.all %}
+    {id: 'mem_{{membership.pk}}', content: '{{ membership.party.name }}',
+        start: '{{membership.start_date|date:"Y-m-d"}}', end: '{{membership.end_date|date:"Y-m-d"}}' || Date(),
+        type: 'background', className: 'light party_{{ membership.party.code|slugify }}', group: 'party'},
+    {% endfor %}
+    {% for position in person.partyposition_set.all %}
+    {id: 'partypos_{{position.pk}}', content: '{{ position.position }}',
+        start: '{{position.start_date|date:"Y-m-d"}}', end: '{{position.end_date|date:"Y-m-d"}}' || Date(),
+        type: '', className: 'party_{{ position.party.code }}', group: 'party'},
+    {% endfor %}
+
+    {% if person.birth_date %}
+    {id: 'dob', content: 'Born<br>{{person.birth_date}}<br>{{person.place_of_birth}}',
+        start: '{{person.birth_date}}', group: 'personal', className: "personal"},
+    {% endif %}
+    {% if person.death_date %}
+    {id: 'dod', content: 'Died<br>{{person.death_date}}',start: '{{person.death_date}}',
+        group: 'personal'},
+    {% endif %}
+
+    {% for mil_service in person.militaryservice_set.all %}
+    {id: 'milserv_{{mil_service.pk}}', content: '{{ mil_service.role }}, {{ mil_service.branch.name}}',
+        start: '{{mil_service.start_date|date:"Y-m-d"}}', end: '{{mil_service.end_date|date:"Y-m-d"}}' || Date(),
+        type: '', className: '', group: 'military'},
+    {% endfor %}
+    
+    {% for appt in person.statutoryappointment_set.all %}
+    {id: 'statappt_{{appt.pk}}', content: '{{ appt.position.label }}',
+        start: '{{appt.start_date|date:"Y-m-d"}}', end: '{{appt.end_date|date:"Y-m-d"}}' || Date(),
+        type: '', className: '', group: 'appt'},
+    {% endfor %}
+    {% for appt in person.chamberappointment_set.all %}
+    {id: 'chamappt_{{appt.pk}}', content: '{{ appt.position.label }}',
+        start: '{{appt.start_date|date:"Y-m-d"}}', end: '{{appt.end_date|date:"Y-m-d"}}' || Date(),
+        type: '', className: '', group: 'appt'},
+    {% endfor %}
+    
+    {% for extra in person.addendum_set.all %}
+        {% if extra.start_date %}
+            {id: 'add_{{extra.pk}}', content: '{{ extra.description|safe }}',
+                start: '{{extra.start_date|date:"Y-m-d"}}', end: '{{extra.end_date|date:"Y-m-d"}}' || Date(),
+                type: '', className: '', group: 'personal'},
+        {% elif extra.date %}
+            {id: 'add_{{extra.pk}}_end', content: '{{ extra.description|safe }}',
+                start: '{{extra.date|date:"Y-m-d"}}',
+                group: 'personal'},
+        {% endif %}
+    {% endfor %}
+  {% endspaceless %}]);
+
+  var groups = new vis.DataSet([
+    {id: 'service', content: 'Service'},
+    {id: 'committees', content: 'Committees'},
+    {id: 'party', content: 'Party'},
+    {% if person.militaryservice_set.count > 0 %}
+        {id: 'military', content: 'Military'},
+    {% endif %}
+    {% if person.chamberappointment_set.count > 0 or person.statutoryappointment_set.count > 0 %}
+        {id: 'appt', content: 'Appointments'},
+    {% endif %}
+    {id: 'personal', content: 'Personal'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    clickToUse: true,
+    start: '{{start_event}}',
+    end: '{{end_event}}',
+    zoomMin: 1000 * 60 * 60 * 24 * 7, //One week in milliseconds
+    editable: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+
+{% endblock %}

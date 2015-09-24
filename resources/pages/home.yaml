@@ -1,0 +1,30 @@
+---
+title: Home
+slug:  home
+override_url: /
+text: |
+    <div id="lead" class="row">
+        <h1>Parliamentary Handbook Online</h1>
+        <p style="height:100px;">
+            Some text that introduces the library, the handbook, and other things that are relevant.
+        </p>
+    </div>
+    <p>
+    On the outset of every new parliament, <a href="">the Parliamentary Library</a> produces the
+    <a href="">Parliamentary Handbook</a> - an omnibus that provides detailed information about Parliament including
+    the parliamentary service and political careers of Senators and Members, and details
+    of parliamentary committees and elections.
+    </p>
+    <div id="mainlinks" class="row">
+        <a class="btn btn-default btn-lg col-xs-12 col-md-4" href="{% url 'all_current' %}">
+            <i class="fa fa-university"></i> All current senators and members</a>
+        <a class="btn btn-default btn-lg col-xs-12 col-md-4" href="{% url 'women_in_parliament' %}">
+            <i class="fa fa-venus"></i> Women in parliament</a>
+        <a class="btn btn-default btn-lg col-xs-12 col-md-4" href="/service/longest-shortest/">
+            <i class="fa fa-calendar"></i> Longest and shortest serving parliamentarians</a>
+        <a class="btn btn-default btn-lg col-xs-12 col-md-4" href="{% url 'all_parliamentarians' %}">
+            <i class="fa fa-globe"></i> Parliamentarians by place of birth</a>
+        <a class="btn btn-default btn-lg col-xs-12 col-md-4" href="/tables/explorer' %}">
+            <i class="fa fa-table"></i> Parliamentarian data explorer</a>
+        <a class="btn btn-default btn-lg col-xs-12 col-md-4" href="/service/war-empire">
+            <i class="fa fa-star-o"></i> Parliamentarians during WWI</a></div>

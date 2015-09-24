@@ -1,0 +1,46 @@
+{% with person=object %}
+    {{ person.phid }} {{ person.sen_id }} {{ person.rep_id }}
+
+    {{ person.first_names }}
+    {{ person.preferred_name }}
+    {{ person.surname }}
+
+    {% if person.current_seat %}
+        {# give current members a boost #}
+        {{ person.first_names }}
+        {{ person.preferred_name }}
+        {{ person.surname }}
+    {% endif %}
+
+    {{ person.gender }}
+    
+    {{ person.biography }}
+    
+    {{ person.date_of_birth }} {{ person.place_of_birth }}
+    {% if person.date_of_death %}
+        Died: {{ person.date_of_death }} {{ person.place_of_death }}
+    {% endif %}
+    
+    {% for seat in person.service_set.all %}
+        {{ seat.seat_type }} {{ seat.electorate }}
+        {{ seat.start_reason }}
+        {{ seat.end_reason }}
+    {% endfor %}
+    
+    {% for position in person.ministerialappointment_set.all %}
+        {{ position.position.name }}
+    {% endfor %}
+    
+    {% for committee in person.committeemembership_set.all %}
+        {{ committee.type }} {{ committee.name }}
+           {{ comm.notes }}
+    {% endfor %}
+    
+    {% for membership in person.partymembership_set.all %}
+        {{ membership.party }}
+    {% endfor %}
+    
+    {% for position in person.partyposition_set.all %}
+        {{ position.position }}
+    {% endfor %}
+{% endwith %}

@@ -1,0 +1,9 @@
+{% load parl_utils static data_interrogator_tags %}
+
+{% block main %}
+
+<h2>{{ table.title }}</h2>
+
+{% static_interrogation_room table %}
+
+{% endblock %}

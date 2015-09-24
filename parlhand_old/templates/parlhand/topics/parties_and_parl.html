@@ -1,0 +1,57 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <script src="{% static "parlhand/tables.js" %}"></script>
+{% endblock %}
+
+{% block title %}Parties and parliament{% endblock %}
+{% block meta_title %}Parties and parliament{% endblock %}
+
+{% block main %}
+
+    <div id="visualization"></div>
+
+<script type="text/javascript">
+    $.ajax({
+        url: "/events/?aggregator=person__partymembership__party__name&filter=seat_type|Member&since=1900-01-01",
+        dataType: "json",
+        success: function (data) {
+            var container = document.getElementById('visualization');
+            console.log(data);
+            var items = [];
+            var groups = new vis.DataSet();
+            $.each(data.data, function(key, propdata) {
+                groups.add({id: key, content: key,
+                    options: {drawPoints: false,interpolation: false}
+                })
+                var keys = propdata.keys
+                var subdata = propdata.data
+                $.each(subdata, function(date, value) {
+                    items.push({x: date, y: value, group: key})
+                });
+            });
+            var dataset = new vis.DataSet(items);
+            var options = {
+                start: '1940-01-01',
+                legend: {left:{position:"top-left"}},
+                dataAxis:{
+                    left:{
+                        range:{min:-2},
+                        format: function (value) {
+                            if (value < 0) { return ""; }
+                            if (value % 1 === 0) {return value;}
+                            return "";
+                        }
+                    }
+                },
+            };
+            
+            var graph2d = new vis.Graph2d(container, dataset, groups, options);
+        },
+    });
+</script>
+
+{% endblock %}

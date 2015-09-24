@@ -1,0 +1,124 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static humanize %}
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+  <link href="/dyncss/party.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+
+{% block meta_title %}{{ ministerialposition.label }}{% endblock %}
+{% block title %}{{ ministerialposition.label }}{% endblock %}
+
+{% block main %}
+
+<div class="row">
+{% if ministerialposition.description %}<div>{{ ministerialposition.description }}</div>{% endif %}
+
+
+<h3>Timeline</h3>
+<div id="visualization"></div>
+
+</div>
+<div class="row">
+    <h2 id="longest">Parliamentarians who have held this positon</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Type</td>
+                <td>Ministry</td>
+                <td>Start date</td>
+                <td>End date</td>
+            </tr>
+        </thead>
+        <tbody>
+            {#% regroup ministerialposition.ministerialappointment_set.all by person as minlist %#}
+            {#% for position in minlist %#}
+            {% for position in ministerialposition.ministerialappointment_set.all %}
+            {% with person=position.person %}
+            <tr>
+                <td>
+                    {% if person.image %}
+                        <img height="40px" src="{{ person.image.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'parlhand:parliamentarian' person.phid %}">{{ person }}</a></td>
+                <td>{{ person.person_type }}</td>
+                <td><a href="{{ position.ministry.get_absolute_url }}">{{ position.ministry.number|ordinal }} {{ position.ministry.name }}</a></td>
+                <td>{{ position.start_date }} </td>
+                <td>{% if position.end_date %}
+                        {{ position.end_date }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endwith %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<script>
+    var items = [];
+
+        {% regroup ministerialposition.ministerialappointment_set.all by person as minlist %}
+        {% for position in minlist %}
+            {% with minister=position.grouper %}
+    
+              var item5 = document.createElement('div');
+              item5.appendChild(document.createTextNode('{{ minister.name }}'));
+              item5.appendChild(document.createElement('br'));
+              item5.appendChild(document.createTextNode('{{ minister.partymembership_set.first.party }}'));
+              {% if minister.picture %}
+                item5.appendChild(document.createElement('br'));
+                var img5 = document.createElement('img');
+                img5.src = '{{ minister.picture.url }}';
+                img5.style.width = '48px';
+                item5.appendChild(img5);
+              {% endif %}
+                {% for p in position.list %}
+                    {% if forloop.first %}
+                        t_start = "{{ p.start_date|date:"Y-m-d" }}";
+                    {% endif %}
+                    {% if forloop.last %}
+                        t_end="{{ p.end_date|end_or_today|date:"Y-m-d" }}";
+                    {% endif %}
+                {% endfor %}
+                
+            items.push(
+                {id: 'min_{{forloop.counter}}', content: item5,
+                    start: t_start, end: t_end,
+                    type: '', className: '',
+                    group: 'service'}
+            )
+            items.push(
+                {id: 'party_{{forloop.counter}}', content: '{{ position.list.1.party.name }}',
+                    start: t_start, end: t_end,
+                    type: 'background', className: 'party_{{ position.list.1.party.code }}',
+                    group: 'party'}
+            )
+            {% endwith %}
+
+        {% endfor %}
+
+  items = new vis.DataSet(items);
+
+  var groups = new vis.DataSet([
+    {id: 'service', content: 'Service'},
+    {id: 'party', content: 'Party'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    zoomMin: 1000 * 60 * 60 * 24 * 7 * 4, //One week in milliseconds
+    editable: false,
+    stack: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+.multicharfields.row {
+    margin:0px;
+}
+
+.multicharfield .draggable_block {
+    border:1px solid gray;
+    padding:0px;
+    margin:2px;
+    border-radius:4px;
+    box-sizing: border-box;
+}
+.multicharfield .draggable_block * {
+    border:0px;   
+}
+.draggable_block input[type='text'] {
+    padding:5px;
+}
+.draggable_block .handle {
+    padding:4px;
+    background-color:white;
+    color:lightgray;
+}
+
+.draggable_block .input-group-btn .btn {
+    display:none;
+}
+
+.draggable_block:hover .handle {
+    color:gray;
+}
+
+.draggable_block:hover .input-group-btn .btn {
+    display:inherit;
+    color:DarkRed;
+    padding:6px;
+}
+
+.draggable_block .input-group-btn .btn:hover {
+    background-color:LightCoral;
+    border:1px solid LightCoral;
+}
+
+.draggable_block .handle:hover {
+    background-color:lightgray;
+}
+
+.draggable_block .handle {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+ /* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.draggable_block .handle:active { 
+    cursor: grabbing !important;
+    cursor: -moz-grabbing !important;
+    cursor: -webkit-grabbing !important;
+}

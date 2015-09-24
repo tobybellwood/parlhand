@@ -1,0 +1,33 @@
+{% extends 'parlhand/base.html' %}
+
+{% block main %}
+<h1>All current and former Senators and Members</h1>
+<div class="row">
+    <table class="table" data-toggle="table" data-export-types="['json', 'csv', 'txt', 'excel']">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Date of birth</th>
+                <th>Place of birth</th>
+                <th>Party</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in parliamentarians %}
+            <tr>
+                <td>
+                    {% if person.picture %}
+                        <img height="40px" src="{{ person.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'parlhand:parliamentarian' person.phid %}">{{ person.full_name }}</a></td>
+                <td>{{ person.person_type }}</td>
+                <td>{{ person.electedposition_set.first.start_date }} </td>
+                <td>{{ person.place_of_birth }}</td>
+                <td>{{ person.current_party }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

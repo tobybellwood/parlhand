@@ -1,0 +1,119 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <h1>{{ ministerialposition.name }}</h1>
+{% if ministerialposition.description %}<div>{{ ministerialposition.description }}</div>{% endif %}
+
+
+<h3>Interactive Timeline</h3>
+<div id="visualization"></div>
+
+</div>
+<div class="row">
+    <div class="col-md-6">
+    <h2 id="longest">Parliamentarians who have held this ministry</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Type</td>
+                <td>Start date</td>
+                <td>End date</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% regroup ministerialposition.ministerialappointment_set.all by person as minlist %}
+            {% for position in minlist %}
+            {% with person=position.grouper %}
+            <tr>
+                <td>
+                    {% if person.picture %}
+                        <img height="40px" src="{{ person.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'parliamentarian' person.phid %}">{{ person }}</a></td>
+                <td>{{ person.person_type }}</td>
+                {% for p in position.list %}
+                    {% if forloop.first %}
+                        <td>{{ p.start_date }} </td>
+                    {% endif %}
+                    {% if forloop.last %}
+                        <td>{% if p.end_date %}
+                                {{ p.end_date }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endwith %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+</div>
+<script>
+    var items = [];
+
+        {% regroup ministerialposition.ministerialappointment_set.all by person as minlist %}
+        {% for position in minlist %}
+            {% with minister=position.grouper %}
+    
+              var item5 = document.createElement('div');
+              item5.appendChild(document.createTextNode('{{ minister.preferred_name }} {{ minister.surname }}'));
+              item5.appendChild(document.createElement('br'));
+              item5.appendChild(document.createTextNode('{{ minister.partymembership_set.first.party }}'));
+              {% if minister.picture %}
+                item5.appendChild(document.createElement('br'));
+                var img5 = document.createElement('img');
+                img5.src = '{{ minister.picture.url }}';
+                img5.style.width = '48px';
+                item5.appendChild(img5);
+              {% endif %}
+                {% for p in position.list %}
+                    {% if forloop.last %}
+                        t_start = "{{ p.start_date.early|date:"Y-m-d" }}";
+                    {% endif %}
+                    {% if forloop.first %}
+                        t_end="{{ p.end_date|end_or_today|date:"Y-m-d" }}";
+                    {% endif %}
+                {% endfor %}
+                
+            items.push(
+                {id: 'min_{{forloop.counter}}', content: item5,
+                    start: t_start, end: t_end,
+                    type: '', className: 'party_{{ minister.partymembership_set.first.party.code }}',
+                    group: 'service'}
+            )
+            {% endwith %}
+
+        {% endfor %}
+
+  items = new vis.DataSet(items);
+
+  var groups = new vis.DataSet([
+    {id: 'service', content: 'Service'},
+    {id: 'party', content: 'Party'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    zoomMin: 1000 * 60 * 60 * 24 * 7 * 4, //One week in milliseconds
+    editable: false,
+    stack: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+
+{% endblock %}

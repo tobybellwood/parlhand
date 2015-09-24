@@ -1,0 +1,32 @@
+
+/* Below modified from: http://www.bootply.com/Z9DZnmTSjO */
+.nav-container {
+  background-color: #f5f5f5;
+  /* text-transform: uppercase; */
+  font-weight: bold;
+}
+  
+.nav-sub-container {
+  background-color: #f8f8f8;  
+  font-weight: bold;
+  cursor: pointer;
+}
+
+ul.nav-stacked ul.nav-stacked > li > a {
+  padding-left: 30px;
+}
+
+#sidebar, #sidebar > div, #sidebar > div > div {
+    padding:0;
+}
+
+#sidebar li a[data-target]::after {
+    display:block;
+    font: normal normal normal 14px/1 FontAwesome;
+    content:"\f0d7";
+    float:right;
+}
+
+#sidebar ul ul {
+    border-bottom:1px solid gray;
+}

@@ -1,0 +1,39 @@
+- fields: {base_model: 'parlhand:Person', limit: 10, title: Shortest serving parliamentarians}
+  model: data_interrogator.datatable
+  pk: 201
+- fields: {column_definition: name, header_text: Name, position: 0, table: 201}
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: length_of_service
+    header_text: Length of Service (days)
+    position: 1
+    table: 201
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: concat(service.electorate.label)
+    header_text: Electorate(s)
+    position: 2
+    table: 201
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: min(service.start_date)
+    header_text: Start date
+    position: 3
+    table: 201
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    column_definition: max(service.end_date)
+    header_text: End date
+    position: 4
+    table: 201
+  model: data_interrogator.datatablepagecolumn
+- fields: 
+    filter_definition: length_of_service<1000
+    table: 201
+  model: data_interrogator.datatablepagefilter
+- fields: 
+    filter_definition: length_of_service>1
+    table: 201
+  model: data_interrogator.datatablepagefilter
+- fields: {ordering: length_of_service, table: 201}
+  model: data_interrogator.datatablepageorder

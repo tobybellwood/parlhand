@@ -1,0 +1,84 @@
+{% load humanize %}
+{% load feincms_tags feincms_page_tags mptt_tags %}
+{% feincms_nav base_nav level=1 depth=2 group='footer' as navitems %}
+<div class="row wow fadeIn animated animated" data-wow-offset="10" data-wow-duration="1.5s" style="visibility: visible; animation-duration: 1.5s; -webkit-animation-duration: 1.5s; animation-name: fadeIn; -webkit-animation-name: fadeIn;">
+			<div class="col-md-3 col-sm-3">
+				<!-- begin logo footer -->
+				
+				<!-- end logo footer -->
+				<p>
+					Lorem ipsum dolor sit amet, 
+					consectetur adipiscing elit. Aliquam 
+					sem, nec iaculis nulla.
+				</p>
+				<p><small>Copyright © 2015 Parliamentary Library.</small></p>
+			</div>
+
+			<div class="col-md-2 col-md-offset-1 col-sm-3">
+				<h4>Fine print</h4>
+				<div class="underline-small"></div>
+				<ul>
+				{% with navitems as navtree %}
+				    {% recursetree navtree %}
+				      <li class="dropdown">
+				        {% if children %}
+				        <a  class="dropdown-toggle" href="{{ node.get_absolute_url }}"
+				            data-toggle="dropdown" 
+				            >{% firstof node.navtitle node.title %}</a>
+				        {% else %}
+				            {% if node.redirect_to %}
+				              <a href="{{ node.redirect_to }}">{{ node.title }}</a>
+				            {% else %}
+				              <a href="{{ node.get_absolute_url }}">{{ node.title }}</a>
+				            {% endif %}
+				        {% endif %}
+				            {% if children %}
+				              <ul class="dropdown-menu" id="tree-submenu-{{ node.html_id }}"
+				                  class="nav nav-stacked nav-list navlist-menu-level-{{ branch_level }} collapse">
+				                  {% if not node.redirect_to %}
+				                  {# only add an extra link to the parent menu if it has no redirect #}
+				                  <li>
+				                      <a href="{{ node.get_absolute_url }}">{{ node.title }}</a>
+				                  </li>
+				                  <li class="nav-divider"></li>
+				                  {% endif %}
+				                  {{ children }}
+				              </ul>
+				            {% endif %}
+				      </li>
+				      {% if node.separator %}
+				          <li class="nav-divider"></li>
+				      {% endif %}
+				    {% endrecursetree %}
+				{% endwith %}
+				</ul>
+			</div>
+
+			<div class="col-md-2 col-md-offset-1 col-sm-3">
+				<h4>Draw us a line</h4>
+				<div class="underline-small"></div>
+				<ul>
+					<li>
+						<a href="https://goo.gl/maps/gQApp">
+							<i class="fa fa-map-marker fa-fw"></i> Maps</a></li>
+					<li>
+						<a href="mailto:parliamentaryhandbook@aph.gov.au">
+							<i class="fa fa-envelope fa-fw"></i> Email</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-md-2 col-md-offset-1 col-sm-3">
+				<h4>Follow the Parliamentary Library</h4>
+				<div class="underline-small"></div>
+				<ul class="list-inline">
+					<li>
+						<a href="http://www.facebook.com/AustralianParliamentaryLibrary"><i class="fa fa-facebook"></i></a>
+					</li>
+					<li>
+						<a href="http://twitter.com/ParlLibrary"><i class="fa fa-twitter"></i></a>
+					</li>
+				</ul>
+			</div>
+
+		</div>

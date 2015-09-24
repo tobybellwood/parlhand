@@ -1,0 +1,4 @@
+{% with ministerial=object %}
+    {{ ministerial.name }}
+    {{ ministerial.description }}
+{% endwith %}

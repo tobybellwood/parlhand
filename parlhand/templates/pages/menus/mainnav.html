@@ -1,0 +1,73 @@
+{% load humanize %}
+{% load feincms_tags feincms_page_tags mptt_tags %}
+{% feincms_nav base_nav level=2 depth=4 as navitems %}
+
+{% spaceless %}
+<ul class="nav navbar-nav pull-right">
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="{% url 'parlhand:parliament' parl_menu.parliament.number %}">The {{ parl_menu.parliament.name }}</a>
+    <ul class="dropdown-menu" id="current">
+      <li><a href="{% url 'parlhand:parliament' parl_menu.parliament.number %}">The {{ parl_menu.parliament.name }}</a></li>
+      <li class="nav-divider"></li>
+      <li><a href="{% url 'parlhand:current' 'senate' %}">Senators</a></li>
+      <li><a href="{% url 'parlhand:current' 'house' %}">Members</a></li>
+      <li class="nav-divider"></li>
+      <li><a href="{% url 'parlhand:ministry' parl_menu.ministry.number %}">The {{ parl_menu.ministry.number|ordinal }} {{ parl_menu.ministry.name }} Ministry</a></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/topics">Elections</a>
+    <ul class="dropdown-menu" id="elections">
+      <li><a href="#">Elections</a></li>
+      <li><a href="#">By-elections</a></li>
+      <li><a href="#">Casual Vacancies</a></li>
+      <li class="nav-divider"></li>
+      <li><a href="#">Electorates</a></li>
+      <li><a href="#">Redistributions</a></li>
+      <li><a href="#">Disputed</a></li>
+    </ul>
+  </li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="/topics">Law</a>
+    <ul class="dropdown-menu" id="legislative">
+      <li><a href="#">Referendums</a></li>
+      <li><a href="#">Plebicites</a></li>
+      <li><a href="#">Reform</a></li>
+    </ul>
+  </li>
+
+{% with navitems as navtree %}
+    {% recursetree navtree %}
+      <li class="dropdown">
+        {% if children %}
+        <a  class="dropdown-toggle" href="{{ node.get_absolute_url }}"
+            data-toggle="dropdown" 
+            >{% firstof node.navtitle node.title %}</a>
+        {% else %}
+            {% if node.redirect_to %}
+              <a href="{{ node.redirect_to }}">{{ node.title }}</a>
+            {% else %}
+              <a href="{{ node.get_absolute_url }}">{{ node.title }}</a>
+            {% endif %}
+        {% endif %}
+            {% if children %}
+              <ul class="dropdown-menu" id="tree-submenu-{{ node.html_id }}"
+                  class="nav nav-stacked nav-list navlist-menu-level-{{ branch_level }} collapse">
+                  {% if not node.redirect_to %}
+                  {# only add an extra link to the parent menu if it has no redirect #}
+                  <li>
+                      <a href="{{ node.get_absolute_url }}">{{ node.title }}</a>
+                  </li>
+                  <li class="nav-divider"></li>
+                  {% endif %}
+                  {{ children }}
+              </ul>
+            {% endif %}
+      </li>
+      {% if node.separator %}
+          <li class="nav-divider"></li>
+      {% endif %}
+    {% endrecursetree %}
+{% endwith %}
+</ul>
+{% endspaceless %}

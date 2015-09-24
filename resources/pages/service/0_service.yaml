@@ -1,0 +1,16 @@
+---
+title: Service of the Nation
+navtitle: Service
+slug:  service
+parent_slug: home
+text: |
+    <blockquote>
+        <p>A good quote about origins</p>
+        <small>Prime Minister <a href="/s/p/F4N">Andrew Fisher</a> in
+        <a href="http://primeministers.naa.gov.au/primeministers/fisher/before-office.aspx#section6">a speech to the 1908 Labor Conference</a></small>
+    </blockquote>
+
+    <p>
+    </p>
+
+    <div id="visualization"></div>

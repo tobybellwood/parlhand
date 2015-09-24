@@ -1,0 +1,57 @@
+{% extends 'parlhand/base.html' %}
+
+{% block meta_title %}Current Senators{% endblock %}
+{% block title %}Current Senators{% endblock %}
+
+{% block main %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css" rel="stylesheet" type="text/css" />
+
+<img class="img-responsive center-block" src="http://www.aph.gov.au/~/media/05%20About%20Parliament/52%20Sen/527%20Photo%20array%20images/senate_chamber_1.jpg">
+<div id="chart2">Current senate breakdown: <svg></svg></div>
+
+<script>
+var data = {{breakdown|safe}};
+nv.addGraph(function() {
+  var chart = nv.models.pieChart()
+      .x(function(d) { return d.code })
+      .y(function(d) { return d.count })
+      .showLabels(true)     //Display pie labels
+      .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+      .labelType("key") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+      .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+      .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+      ;
+
+    d3.select("#chart2 svg")
+        .datum(data)
+        .transition().duration(350)
+        .call(chart);
+
+  return chart;
+});
+</script>
+<table class="table">
+<thead>
+    <tr>
+        <td>Name</td>
+        <td>State</td>
+        <td>Party</td>
+    </tr>
+</thead>
+<tbody>
+    {% for senator in parliamentarians %}
+    <tr>
+        <td>
+            {% if senator.image %}
+                <img height="40px" src="{{ senator.image.url }}" ></img>
+            {% endif %}
+            <a href="{% url 'parlhand:parliamentarian' senator.phid %}">{{ senator.full_name }}</a></td>
+        <td>{{ senator.current_seat.electorate.label }}</td>
+        <td>{{ senator.current_party }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endblock %}

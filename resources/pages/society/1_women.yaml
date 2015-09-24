@@ -1,0 +1,101 @@
+---
+title: Women in Parliament
+slug:  women-in-parliament
+parent_slug: society
+table: Women in Parliament
+text: |
+    <blockquote>
+        <p>I trust that not another Federal election will take place without there
+        being a woman endorsed as a Labour candidate for the Senate and I hope
+        that it will not be only in one State.</p>
+        <small>Prime Minister <a href="/s/p/F4N">Andrew Fisher</a> in
+        <a href="http://primeministers.naa.gov.au/primeministers/fisher/before-office.aspx#section6">a speech to the 1908 Labor Conference</a></small>
+    </blockquote>
+    
+    <p>
+    In 1943 Australia's first female Senator and Member were elected,
+    <a href="/s/p/K7Y">Dame Dorothy Tagney</a> and <a href="/s/p/J7U">Dame Enid Lyons</a>
+    respectfully. Since 1943 Australia has always had a sitting female Senator,
+    with Dame Tangney soon followed after by <a href="/s/p/K28">Annabelle Rankin</a> in 1947.
+    </p>
+    <p>
+    In 1946 Australia's second female Member, <a href="/s/p/JPL">Doris Blackburn</a>, was elected.
+    However, following her defeat in 1949 and Dame Lyons retirement in 1951 it
+    would be a further 15 years before a female Member, <a href="/s/p/JSO">Kay Brownbill</a>,
+    would rejoin the House of Representatives.
+    </p>
+    <p>
+    In 1976 Prime Minister
+    <a href="/s/p/QS4">Malcolm Fraser</a> appointed <a href="/s/p/KVM">Anthony Street</a>
+    the first <a href="/tables/explorer?lead_suspect=parlhand%3APerson&filter_by=ministerialappointment.position.label__contains%3Dwomen&filter_by=&columns=name&columns=ministerialappointment.position.label&columns=ministerialappointment.start_date&columns=&sort_by=ministerialappointment.start_date&sort_by=&action=">Minister in charge of Women's Affairs</a>,
+    and in 1983 <a href="/s/p/GD5">Susan Ryan</a> was the first woman appointed to this
+    role, with many following since.
+    </p>
+    <p>In 2007 <a href="/s/p/83L">Julia Gillard</a> became the first female Deputy Prime Minister
+    before becoming Australia's first female Prime Minister in the
+    <a href="https://en.wikipedia.org/wiki/Australian_Labor_Party_leadership_spill,_2010">2010 Labor leadership challenge</a>.
+    </p>
+    <p>
+    Below shows a graph of the number of women in the Senate and the House of Representatives
+    since 1940, with a following table of all women who have sat in the history of Australia's Parliament.
+    Search through the table for years or names to get more information and links to people and events.
+    </p>
+    
+    <div id="visualization"></div>
+    
+scripts: |
+    <style>
+        svg .member {
+            stroke:rgb(48, 113, 89);;
+            fill:none;
+            stroke-width:2px;
+        }
+        svg .senator {
+            stroke:rgb(153, 80, 79);;
+            fill:none;
+            stroke-width:2px;
+        }
+    </style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+script: |
+    $.ajax({
+        url: "/api/events/?aggregator=chamber__title&filter=person__gender|Female&since=1940-01-01",
+        dataType: "json",
+        success: function (data) {
+            var container = document.getElementById('visualization');
+            console.log(data);
+            var items = [];
+            var groups = new vis.DataSet();
+            $.each(data.data, function(key, propdata) {
+                console.log(key, propdata);
+    
+                groups.add({id: key, content: key,
+                    className: key.toLowerCase(),
+                    options: {drawPoints: false,interpolation: false}
+                })
+                var keys = propdata.keys
+                var subdata = propdata.data
+                $.each(subdata, function(date, value) {
+                    items.push({x: date, y: value, group: key})
+                });
+            });
+            var dataset = new vis.DataSet(items);
+            var options = {
+                start: '1940-01-01',
+                legend: {left:{position:"top-left"}},
+                dataAxis:{
+                    left:{
+                        range:{min:-2},
+                        format: function (value) {
+                            if (value < 0) { return ""; }
+                            if (value % 1 === 0) {return value;}
+                            return "";
+                        }
+                    }
+                },
+            };
+            
+            var graph2d = new vis.Graph2d(container, dataset, groups, options);
+        },
+    });

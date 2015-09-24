@@ -1,0 +1,10 @@
+svg .member {
+    stroke:rgb(48, 113, 89);;
+    fill:none;
+    stroke-width:2px;
+}
+svg .senator {
+    stroke:rgb(153, 80, 79);;
+    fill:none;
+    stroke-width:2px;
+}

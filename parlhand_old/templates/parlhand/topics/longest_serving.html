@@ -1,0 +1,83 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils %}
+
+{% block main %}
+<h1>Longest and shortest serving parliamentarians</h1>
+<ul class="visible-sm visible-xs">
+    <li><a href="#longest">Jump to longest serving</a></li>
+    <li><a href="#shortest">Jump to shortest serving</a></li>
+</ul>
+<div class="row">
+    <div class="col-md-6">
+    <h2 id="longest">Longest serving parliamentarians</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Type</td>
+                <td>Days served</td>
+                <td>Start date</td>
+                <td>End date</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for days,person in longest %}
+            <tr>
+                <td>
+                    {% if person.picture %}
+                        <img height="40px" src="{{ person.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'parliamentarian' person.phid %}">{{ person.full_name }}</a></td>
+                <td>{{ person.person_type }}</td>
+                <td>{{ days.days }}
+                    <br><small>({{ days.days | days_to_years }})</small>
+                </td>
+                <td>{{ person.electedposition_set.first.start_date }} </td>
+                <td>{% if person.electedposition_set.last.end_date %}
+                        {{ person.electedposition_set.last.end_date }}
+                        <br><small>({{ person.electedposition_set.last.end_reason }})</small>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div class="col-md-6">
+    <h2 id="shortest">Shortest serving parliamentarians</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Type</td>
+                <td>Days served</td>
+                <td>Start date</td>
+                <td>End date</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for days,person in shortest %}
+            <tr>
+                <td>
+                    {% if person.picture %}
+                        <img height="40px" src="{{ person.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'parliamentarian' person.phid %}">{{ person.full_name }}</a></td>
+                <td>{{ person.person_type }}</td>
+                <td>{{ days.days }} </td>
+                <td>{{ person.electedposition_set.first.start_date }} </td>
+                <td>{% if person.electedposition_set.last.end_date %}
+                        {{ person.electedposition_set.last.end_date }} ({{ person.electedposition_set.last.end_reason }})
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

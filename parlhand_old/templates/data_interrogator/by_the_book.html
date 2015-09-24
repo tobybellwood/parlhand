@@ -1,0 +1,17 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static data_interrogator %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+
+<h1>{{ table.title }}</h1>
+<p>{{ table.content|safe }}</p>
+
+{% interrogation_room %}
+
+{% endblock %}

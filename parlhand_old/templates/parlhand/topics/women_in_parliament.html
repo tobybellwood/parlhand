@@ -1,0 +1,148 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <script src="{% static "parlhand/tables.js" %}"></script>
+{% endblock %}
+
+{% block title %}Current and former women in parliament{% endblock %}
+{% block meta_title %}Current and former women in parliament{% endblock %}
+
+{% block main %}
+
+    <div id="visualization"></div>
+    <div id="visualization2"></div>
+
+    <table class="table" data-toggle="table"
+           data-toolbar="#toolbar"
+           data-search="true"
+           data-show-refresh="false"
+           data-show-filter="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-show-export="true"
+           data-detail-view="false"
+    >
+        <thead>
+            <tr>
+                <th data-switchable='true' data-sortable='true'  data-sorter="valsorter">Name</th>
+                <th data-sortable='true'>Type</th>
+                <th data-sortable='true'  data-sorter="valsorter">Length of Service</th>
+                <th data-sortable='true'>Start date</th>
+                <th data-sortable='true'>Party</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in parliamentarians %}
+            <tr>
+                <td data-value="{{person.surname}}"><a href="{% url 'parliamentarian' person.phid %}">{{ person }}</a></td>
+                <td>{{ person.person_type }}</td>
+                <td data-value="{{person.length_of_service.days}}">{{ person.length_of_service.days|days_to_years }}</td>
+                <td>{{ person.service_set.first.start_date }} </td>
+                <td>{{ person.current_party }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<style>
+    svg .member {
+        stroke:rgb(48, 113, 89);;
+        fill:none;
+        stroke-width:2px;
+    }
+    svg .senator {
+        stroke:rgb(153, 80, 79);;
+        fill:none;
+        stroke-width:2px;
+    }
+</style>
+<script type="text/javascript">
+    var container = document.getElementById('visualization2');
+    var items = [
+    {% for d,count,type in dates %}
+        {x: '{{d|date:"Y-m-d"}}', y: {{count}}, group: '{{type}}'},
+    {% endfor %}
+    ];
+    
+    var groups = new vis.DataSet();
+    groups.add({id: 'Senator', content: "Senators",
+        className: 'senator',
+        options: {
+            drawPoints: false,
+            interpolation: false
+        }
+    })
+    groups.add({id: 'Member', content: "Members",
+        className: 'member',
+        options: {
+            drawPoints: false,
+            interpolation: false
+        }
+    })
+    
+    var dataset = new vis.DataSet(items);
+    var options = {
+        start: '1940-01-01',
+        legend: {left:{position:"top-left"}},
+        dataAxis:{
+            left:{
+                range:{min:-2},
+                format: function (value) {
+                    if (value < 0) { return ""; }
+                    if (value % 1 === 0) {return value;}
+                    return "";
+                }
+        
+            }
+            },
+    };
+    var graph2d = new vis.Graph2d(container, dataset, groups, options);
+</script>
+
+<script type="text/javascript">
+    $.ajax({
+        url: "/events/?aggregator=seat_type&filter=person__gender|Female&since=1940-01-01",
+        dataType: "json",
+        success: function (data) {
+            var container = document.getElementById('visualization');
+            console.log(data);
+            var items = [];
+            var groups = new vis.DataSet();
+            $.each(data.data, function(key, propdata) {
+                console.log(key, propdata);
+
+                groups.add({id: key, content: key,
+                    className: key.toLowerCase(),
+                    options: {drawPoints: false,interpolation: false}
+                })
+                var keys = propdata.keys
+                var subdata = propdata.data
+                $.each(subdata, function(date, value) {
+                    items.push({x: date, y: value, group: key})
+                });
+            });
+            var dataset = new vis.DataSet(items);
+            var options = {
+                start: '1940-01-01',
+                legend: {left:{position:"top-left"}},
+                dataAxis:{
+                    left:{
+                        range:{min:-2},
+                        format: function (value) {
+                            if (value < 0) { return ""; }
+                            if (value % 1 === 0) {return value;}
+                            return "";
+                        }
+                    }
+                },
+            };
+            
+            var graph2d = new vis.Graph2d(container, dataset, groups, options);
+        },
+    });
+</script>
+
+{% endblock %}

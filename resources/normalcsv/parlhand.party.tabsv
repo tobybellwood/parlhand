@@ -1,0 +1,62 @@
+code	name	descendent_id	summary	founding_date	dissolution_date	primary_colour	secondary_colour
+ANTI-SOC	Anti-Socialist Party	LP	Anti-Socialist Party	1906	1909	#4682b4	white
+CP	Australian Country Party	NP	Australian Country Party	1920-01-20	1975	#00704A	white
+CP-LP	Australian Country Party - Liberal Party of Australia	LP	Australian Country Party - Liberal Party of Australia	1945	1950	#36B661	white
+AUST CP	Australian Country Party (Victoria)	NP	Australian Country Party (Victoria)	1930	1940	#36B661	white
+DEM	Australian Democrats	DEM	Australian Democrats	1977		#F8981D	white
+GRN	Australian Greens	GRN	Australian Greens	1992		#36B661	white
+ALP	Australian Labor Party	ALP	Australian Labor Party	1901-06-08		#A90E13	white
+ALP (A-C)	Australian Labor Party (Anti-Communist)	DLP	Australian Labor Party (Anti-Communist)	1955	1958	#F8981D	white
+ALP (N-C)	Australian Labor Party (Non-Communist)	ALP	Australian Labor Party (Non-Communist)	1940	1941	#E2AEB0	white
+AMEP	Australian Motoring Enthusiast Party	IND	Australian Motoring Enthusiast Party	2013		#999999	white
+LIB	Commonwealth Liberal Party	LP	Commonwealth Liberal Party	1909	1916	#5583B7	white
+CLR	Country Labor Party	ALP	Country Labor Party	2000		#E2AEB1	white
+CLP	Country Liberal Party	CLP	Country Liberal Party	1974		#AAC1DB	white
+CNO	Country National Organisation	NP	Country National Organisation	1940	1950	#36B661	white
+C PROG	Country Progressive Party	IND	Country Progressive Party	1925	1930	#999999	white
+DLP	Democratic Labor Party (DLP) of Australia	DLP	Democratic Labor Party (DLP) of Australia	1978		#eeaf30	white
+EC	Emergency Committee	LP	Emergency Committee	1931	1932	#36B661	white
+FFP	Family First Party	FFP	Family First Party	2001		orange	#00CCFF
+FS	Farmers and Settlers Association	NP	Farmers and Settlers Association	1915	1925	#36B661	white
+FCP	Federal Country Party (Victoria)	NP	Federal Country Party (Victoria)	1935	1940	#36B661	white
+FT	Free Trade	LP	Free Trade	1889	1906	#AAC1DB	white
+IND	Independent	IND	Independents	1901		#999999	white
+IND CP	Independent Country Party	IND	Independent Country Party	1940	1945	#999999	white
+IND LAB	Independent Labor	IND	Independent Labor	1959	1977	#999999	white
+IND LBR	Independent Labour	IND	Independent Labour	1901	1907	#999999	white
+IND NAT	Independent Nationalist	IND	Independent Nationalist	1915	1935	#999999	white
+IND PROT	Independent Protectionist	IND	Independent Protectionist	1905	1910	#999999	white
+IND UAP	Independent United Australia Party	IND	Independent United Australia Party	1931	1945	#999999	white
+KAP	Katter's Australian Party	IND	Katter's Australian Party	2011		#999999	white
+LAB	Labour	ALP	Labour	1901	1912	#C55E61	white
+LANG LAB	Lang Labor	ALP	Lang Labor	1922	1951	#C55E61	white
+LCL	Liberal and Country League	NP	Liberal and Country League	1932	1974	#36B661	white
+LCP	Liberal and Country Party	NP	Liberal and Country Party	1949	1965	#36B661	white
+LDP	Liberal Democratic Party	IND	Liberal Democratic Party	2001		#999999	white
+LM	Liberal Movement	LP	Liberal Movement	1972	1976	#36B661	white
+LNP	Liberal National Party of Queensland	LP	Liberal National Party of Queensland	2008		#0087DC	white
+LP	Liberal Party of Australia	LP	Liberal Party of Australia	1945-08-31		#014694	white
+NA	National Alliance	NP	National Alliance	1970	1974	#36B661	white
+NCP	National Country Party	NP	National Country Party	1975	1978	#559F86	white
+NLU	National Liberal Union	LP	National Liberal Union	1901	1910	#36B661	white
+NP	National Party of Australia	NP	National Party of Australia	1974		#00704A	white
+NAT F	Nationalist and Farmers	NP	Nationalist and Farmers	1915	1925	#36B661	white
+NAT	Nationalist Party of Australia	LP	Nationalist Party of Australia	1917	1931	#4682b4	white
+XEN	Nick Xenophon Group	IND	Nick Xenophon Group	2014		#FF7400	black
+NDP	Nuclear Disarmament Party	IND	Nuclear Disarmament Party	1984	2009	#999999	white
+PUP	Palmer United Party	PUP	Palmer United Party	2013		#D6301D	white
+HAN	Pauline Hanson's One Nation	IND	Pauline Hanson's One Nation	1997		#F8F16F	black
+PROG LAB	Progressive Labour	ALP	Progressive Labour	1925	1930	#E2AEB2	white
+PROT	Protectionist	LP	Protectionist	1889	1909	#E2AEB0	white
+QCP	Queensland Country Party	NP	Queensland Country Party	1909	1932	#36B661	white
+REV T	Revenue Tariff	LP	Revenue Tariff	1889	1906	#36B661	white
+HAR	Senator Brian Harradine Group	IND	Senator Brian Harradine Group	1975	2005	#999999	white
+ST CP	State Country Party (Victoria)	NP	State Country Party (Victoria)	1935	1940	#36B661	white
+TG	Tasmanian Greens	GRN	Tasmanian Greens	1992		#36B664	white
+GWA	The Greens (WA) Inc	GRN	The Greens (WA) Inc	1990		#36B662	white
+UAP	United Australia Party	LP	United Australia Party	1931	1945	#AAC1DB	white
+UCP	United Country Party (Victoria)	NP	United Country Party (Victoria)	1930		#36B661	white
+VPG	Vallentine Peace Group	IND	Vallentine Peace Group	1985	1990	#999999	white
+VFU	Victorian Farmers' Union	NP	Victorian Farmers' Union	1914	1930	#36B661	white
+WAP	Western Australia Party	LP	Western Australia Party	1906	1907	#36B661	white
+WAG	Western Australian Green Party	GRN	Western Australian Green Party	1990		#36B663	white

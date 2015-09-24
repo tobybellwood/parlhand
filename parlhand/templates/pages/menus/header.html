@@ -1,0 +1,36 @@
+<nav class="main navbar navbar-inverse">
+    <div class="container-fluid" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Handbook
+          <!--img src="//www.aph.gov.au/images/template/header-logo.png" alt="Parliament of Australia"--></a>
+        </div>
+    
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            {% if not hide_search %}
+                {% comment %}
+                The search block is defined to allow some pages
+                (SPECIFICALLY the home page) to override or hide the search bar
+                DO NOT OVERRIDE THIS UNLESS YOU ARE CERTAIN OF WHAT YOU ARE DOING!
+                {% endcomment %}
+                <form id="quickSearch" action="/search" method="get"
+                class="navbar-form navbar-left" role="search">
+                    <label style="display:none;" for="searchText">Search:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchText" name="q" accesskey="q"></input>
+                        <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit" title="Search">
+                            <i class="glyphicon glyphicon-search"></i>&nbsp;
+                        </button>
+                    </div>
+                </form>
+            {% endif %}
+            {% include "pages/menus/mainnav.html" %}
+        </div>
+    </div>
+</nav>

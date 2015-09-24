@@ -1,0 +1,31 @@
+{% extends 'parlhand/base.html' %}
+{% load static %}
+
+{% block meta_title %}{% block title %}{{ feincms_page.title }}{% endblock %}{% endblock %}
+{% block extra_script %}
+    
+    {% if feincms_page.scripts %}
+     {{ feincms_page.scripts|safe }}
+    {% else %}
+      <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+      <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+    {% endif %}
+      <script src="{% static "parlhand/tables.js" %}"></script>
+      <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+
+    {% if feincms_page.script %}
+    <script type="text/javascript">
+        {{feincms_page.script|safe}}
+    </script>
+    {%endif %}
+{% endblock %}
+
+{% block main %}
+
+    {% for content in feincms_page.content.main %}
+        <div>
+        {{ content.render|safe }}
+        </div>
+    {% endfor %}
+
+{% endblock %}

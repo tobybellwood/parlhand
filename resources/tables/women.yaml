@@ -1,0 +1,23 @@
+- fields: {base_model: 'parlhand:Person', limit: null, title: Women in Parliament}
+  model: data_interrogator.datatable
+  pk: 100
+- fields: {column_definition: name, header_text: Name, position: 0, table: 100}
+  model: data_interrogator.datatablepagecolumn
+- fields: {column_definition: concat(service.chamber.title), header_text: Chamber,
+    position: 1, table: 100}
+  model: data_interrogator.datatablepagecolumn
+- fields: {column_definition: concat(service.electorate.label), header_text: Electorate,
+    position: 2, table: 100}
+  model: data_interrogator.datatablepagecolumn
+- fields: {column_definition: min(service.start_date), header_text: start date,
+    position: 3, table: 100}
+  model: data_interrogator.datatablepagecolumn
+- fields: {column_definition: max(service.end_date), header_text: end date, position: 4,
+    table: 100}
+  model: data_interrogator.datatablepagecolumn
+- fields: {filter_definition: gender=Female, table: 100}
+  model: data_interrogator.datatablepagefilter
+- fields:
+    ordering: min(service.start_date)
+    table: 100
+  model: data_interrogator.datatablepageorder

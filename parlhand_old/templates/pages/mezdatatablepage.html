@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load data_interrogator_tags %}
+{% load mezzanine_tags static %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block meta_title %}{{ page.title }}{% endblock %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <script src="{% static "parlhand/tables.js" %}"></script>
+  <link href="{% static "parlhand/vis.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+{{page.mezdatatablepage.content|safe}}
+
+{% static_interrogation_room page.mezdatatablepage %}
+{% if page.mezdatatablepage.script %}
+<script type="text/javascript">
+{{ page.mezdatatablepage.script|safe }}
+</script>
+{% endif %}
+{% endblock %}

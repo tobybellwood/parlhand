@@ -1,0 +1,33 @@
+- fields: {base_model: 'parlhand:Person', limit: null, title: Independents}
+  model: data_interrogator.datatable
+  pk: 304
+- fields:
+    column_definition: name
+    header_text: Name
+    position: 0
+    table: 304
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: length_of_service
+    header_text: Length of Service
+    position: 1
+    table: 304
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: concat(service.electorate.label)
+    header_text: Electorates Served
+    position: 2
+    table: 304
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    ordering: -length_of_service
+    table: 304
+  model: data_interrogator.datatablepageorder
+- fields: 
+    filter_definition: partymembership.party.code=IND
+    table: 304
+  model: data_interrogator.datatablepagefilter
+- fields: 
+    filter_definition: count(partymembership.party)<=1
+    table: 304
+  model: data_interrogator.datatablepagefilter

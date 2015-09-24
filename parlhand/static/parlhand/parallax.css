@@ -1,0 +1,80 @@
+/* magic number 
+
+150px: Height of parallax area
+
+*/
+
+#content, #footer {
+  position:relative;
+  top:150px;
+}
+
+#content-off {
+    background-color:rgba(225, 225, 225, 0.8) !important;
+}
+
+.lead {
+  position:fixed;
+  top:0px;
+  height: 100vh;
+  width:100%;
+  z-index:-10;
+  /* background-image:url('http://placehold.it/1650x150/EEE'); */
+  
+}
+
+.lead .container {
+  /* background-color:rgba(200, 200, 200, 0.5); */
+  height:100vh;
+  position:relative;
+  top:0px;
+  background-color:white;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.lead .container:before {
+  content: '';
+  background-image:url(//www.aph.gov.au/images/template/body-home-day.jpg);
+  background-size: 100% auto;
+  background-repeat:no-repeat;
+  z-index:100;
+  height:450px;
+  display:block;
+}
+.lead.data .container:before {
+  background-image:url('/static/data_bg.jpg');
+  height:450px;
+}
+
+.lead.senator .container:before {
+  background-image:url('http://chockstone.smugmug.com/photos/1219676949_mxKhe-XL.jpg');
+}
+
+.lead.lead_member .container:before {
+  background-image:url('https://upload.wikimedia.org/wikipedia/commons/3/33/Australian_house_of_representatives04.jpg');
+}
+
+.lead.pre_1988 .container {
+  background-image:url('http://chockstone.smugmug.com/photos/1219676949_mxKhe-XL.jpg');
+}
+
+.lead.pre_1935 .container  {
+  background-image:url('http://chockstone.smugmug.com/photos/1219676949_mxKhe-XL.jpg');
+}
+.lead.pre_1910 .container  {
+  background-image:url('http://chockstone.smugmug.com/photos/1219676949_mxKhe-XL.jpg');
+}
+
+/* 
+.follow h2 {
+    background-color:rgba(200, 54, 54, 0.5);
+}
+.follow {
+    position:relative;
+    top:-150px;
+}
+
+.follow .affix {
+    top:100px !important;
+}*/

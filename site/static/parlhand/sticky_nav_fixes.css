@@ -1,0 +1,27 @@
+body {
+    padding-top: 55px;/* make room for the nav bar */
+}
+
+.lead {
+  padding-top:50px;
+}
+/* make room for the nav bar */
+h1[id],section[id]
+{
+    padding-top: 55px;
+    margin-top: -55px;
+}
+
+@media (min-width: 768px) {
+    /* Only affix main nav on big screens */
+    .main.navbar.navbar-fixed-top {
+        position: fixed;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Only affix main nav on big screens */
+    .navbar-fixed-top .navbar-collapse {
+        max-height: none;
+    }
+}

@@ -1,0 +1,14 @@
+{# custom #}
+<div class='multicharfield'>
+    <button type='button' class='multi-btn btn btn-success' value='{{add_text}}'
+        onclick='addField(this.parentElement);return false'>
+        <span class="fa fa-plus"></span> {{add_text}}
+    </button>
+    <div id="{{id}}_container" class="multicharfields row">{{html}}</div>
+    <span class="multicharblank" style='display:none;'>
+    {{blank_widget}}
+    </span>
+    <script>
+    make_sortable("{{id}}_container","{{id}}");
+    </script>
+</div>

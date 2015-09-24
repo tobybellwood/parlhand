@@ -1,0 +1,188 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block meta_title %}{{ person.full_name }}{% endblock %}
+{% block title %}
+    {{ person.first_names }}
+    {% if person.preferred_name and person.preferred_name != person.first_names %}({{ person.preferred_name }}){% endif %}
+    {{ person.surname }}
+    {% if not person.current_seat %}
+    <small>Parliamentary history</small>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+<div class="parl">
+
+<div>
+    <h2>
+    {% if person.picture %}
+        <img style="float:right;" src="{{ person.picture.url }}" height="150px"></img>
+    {% endif %}
+    {% if person.current_seat %}
+        Current <a href="{{}}" title="Click for current member details">{{ person.current_seat.seat_type }} for {{ person.current_seat.electorate }}{% if person.current_seat.seat_type = "Member" %}{% endif %}</a>
+    {% else %}
+        Former parliamentarian
+    {% endif %}
+    </h2>
+</div>
+
+<h2>Biography</h2>
+<p>{{ person.biography }}</p>
+<h3>Personal</h3>
+<p>Born: {{ person.date_of_birth }}, {{ person.place_of_birth }}</p>
+{% if person.date_of_death %}
+    <p>Died: {{ person.date_of_death }}</p>
+{% endif %}
+
+<h3>Interactive Timeline</h3>
+<div id="visualization"></div>
+
+<h3>Electoral history</h3>
+Length of service: {{ person.length_of_service.days | days_to_years }}
+<ul>
+     {% for seat in person.service_set.all %}
+        <li>
+            <a style="color:gray" href="{% url 'electorate' seat.electorate.id %}">
+            {{ seat.seat_type }} for {{ seat.electorate }}
+            </a> -
+            From {{ seat.start_date }} ({{ seat.start_reason }}) until
+            {% if seat.end_date %}
+                {{ seat.end_date }} ({{ seat.end_reason }})
+            {% else %}
+                Present
+            {% endif %}
+        </li>
+     {% endfor %}
+</ul>
+
+{% if person.ministerialappointment_set %}
+<h3>Ministerial Appointments</h3>
+<ul>
+    {% for position in person.ministerialappointment_set.all %}
+    <li id="min_{{position.pk}}">
+        <a style="color:gray" href="{% url 'ministerialposition' position.position.id %}">{{ position.position.name }}</a> from
+        {#% date_range position.start_date position.end_date %#}
+        {{position.start_date}} - {{position.end_date}}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<h3>Committee Memberships</h3>
+<ul>
+    {% comment %}
+        Regroup doesn't sort, so if the objects are pulled from the database in the wrong order this won't work properly.
+        If this list comes out wrong, double check the default ordering of CommitteeMembership in models.py
+    {% endcomment %}
+    {% regroup person.committeemembership_set.all by committee.name as comms_list %}
+    {% for comm_group in comms_list %}
+    <li>{{ comm_group.list.0.committee.type }}: {{ comm_group.grouper }}
+        <ul>
+            {% for comm in comm_group.list %}
+            <li id="com_{{comm.pk}}">
+            From {% date_range comm.start_date comm.end_date %}
+            {% if comm.notes %}[{{ comm.notes }}]{% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Party history</h3>
+<ul>
+    {% for membership in person.partymembership_set.all %}
+        <li>
+            {{ membership.party }}:
+            {% date_range membership.start_date membership.end_date sep="-" %}
+        </li>
+    {% empty %}
+        <li>None</li>
+    {% endfor %}
+</ul>
+<ul>
+    {% for position in person.partyposition_set.all %}
+    <li id="partypos_{{position.pk}}">
+        {{ position.position }}: from
+        {{position.start_date}} - {{position.end_date}}
+    </li>
+    {% endfor %}
+</ul>
+
+<script>
+  var items = new vis.DataSet([
+    {% for service in person.service_set.all %}
+        {id: 'serv_{{service.pk}}', content: '{{ service.seat_type }}: {{ service.electorate.name }}',
+            start: '{{service.start_date.early|date:"Y-m-d"}}', end: '{{service.end_date.late|end_or_today|date:"Y-m-d"}}',
+            type: 'background', className: 'service_{{ service.seat_type }}', group: 'service'},
+        {id: 'serv_{{service.pk}}_st', content: 'Elected {{ service.start_reason }}',
+            start: '{{service.start_date.early|date:"Y-m-d"}}',
+            group: 'service', className: 'major'},
+        {% if service.end_date %}
+        {id: 'serv_{{service.pk}}_end', content: '{{ service.end_reason }}',
+            start: '{{service.end_date.late|date:"Y-m-d"}}',
+            group: 'service', className: 'major'},
+        {% endif %}
+    {% endfor %}
+    {% for ministerial in person.ministerialappointment_set.all %}
+    {id: 'min_{{ministerial.pk}}', content: '<a href="#min_{{ministerial.pk}}">{{ ministerial.position.name }}</a>',
+        start: '{{ ministerial.start_date.early|date:"Y-m-d"}}',
+        end: '{{ ministerial.end_date.late|date:"Y-m-d"}}',
+        group: 'service', className: 'ministerial'},
+    {% endfor %}
+
+    {% for committee in person.committeemembership_set.all %}
+    {id: 'com_{{committee.pk}}', content: '<a href="#com_{{committee.pk}}">{{ committee.committee.name }}<br>{{ committee.committee.type }}</a>',
+        start: '{{committee.start_date|date:"Y-m-d"}}', end: '{{committee.end_date|end_or_today|date:"Y-m-d"}}',
+        group: 'committees', className: 'committee'},
+    {% endfor %}
+
+    {% for membership in person.partymembership_set.all %}
+    {id: 'mem_{{membership.pk}}', content: '{{ membership.party.name }}',
+        start: '{{membership.start_date|date:"Y-m-d"}}', end: '{{membership.end_date|end_or_today|date:"Y-m-d"}}',
+        type: 'background', className: 'party_{{ membership.party.code }}', group: 'party'},
+    {% endfor %}
+    {% for position in person.partyposition_set.all %}
+    {id: 'partypos_{{position.pk}}', content: '{{ position.position }}',
+        start: '{{position.start_date|date:"Y-m-d"}}', end: '{{position.end_date|end_or_today|date:"Y-m-d"}}',
+        type: '', className: 'party_{{ position.party.code }}', group: 'party'},
+    {% endfor %}
+
+    {% if person.date_of_birth %}
+    {id: 'dob', content: 'Born<br>{{person.date_of_birth}}<br>{{person.place_of_birth}}',
+        start: '{{person.date_of_birth}}', group: 'personal', className: "personal"},
+    {% endif %}
+    {% if person.date_of_death %}
+    {id: 'dod', content: 'Died<br>{{person.date_of_death}}',start: '{{person.date_of_death}}',
+        group: 'personal'},
+    {% endif %}
+
+  ]);
+
+  var groups = new vis.DataSet([
+    {id: 'service', content: 'Service'},
+    {id: 'committees', content: 'Committees'},
+    {id: 'party', content: 'Party'},
+    {id: 'personal', content: 'Personal'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    start: '{{person.first_event.start_date|date:"Y-m-d"}}',
+    end: '{{person.date_of_death|end_or_today|date:"Y-m-d"}}',
+    zoomMin: 1000 * 60 * 60 * 24 * 7, //One week in milliseconds
+    editable: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+</div>
+
+{% endblock %}

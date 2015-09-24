@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+   <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE9" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% spaceless %}
+                {% block meta_title  %}Home{% endblock %}
+                -
+                {# replacable name that follows every title (replace in parlhand/base.html) #}
+                {% block meta_title_const %}Parliamentary Handbook {% endblock %}
+        {% endspaceless %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <!-- begin extrahead -->
+        {% block extra_head %}{# only for use in parlhand/base.html to add content #}
+        {% endblock %}
+        <!-- end extrahead -->
+
+        <script src="{% static "parlhand/progressive_enhancements.js" %}"></script>
+        <!-- begin extra_script -->
+        {% block extra_script %}
+        {% endblock %}
+        <!-- end extra_script -->
+        <link href="{% static "parlhand/fancy.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "parlhand/parallax.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "parlhand/parlhand.css" %}" rel="stylesheet" type="text/css" />
+
+        <!-- for fancy tables -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+        <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+
+        <script src="//rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/extensions/export/bootstrap-table-export.js"></script>
+
+        <!-- for draggables -->
+
+   </head>
+
+   <body data-spy="scroll" data-target="#spymenu">
+    <a class="sr-only" href="#content">Jump to content</a>
+    {% include "pages/menus/header.html" %}
+    <div class="lead  {% block lead_type %}{% endblock %}">
+        <div class="container">
+        </div>
+    </div>
+    <div id='content' class=" follow container">
+        <h1 id="top">{% block title %}{% endblock %}</h1>
+        {% block main %}{% endblock %}
+    </div>
+    <div id="footer" class="container footer">
+    {% include "pages/menus/footer.html" %}
+    </div>
+   </body>
+</html>

@@ -1,0 +1,37 @@
+- fields: {base_model: 'parlhand:Party', limit: null, title: Political Parties}
+  model: data_interrogator.datatable
+  pk: 300
+- fields:
+    column_definition: name
+    header_text: Name
+    position: 0
+    table: 300
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: founding_date
+    header_text: Founding Date
+    position: 2
+    table: 300
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: dissolution_date
+    header_text: Dissolution Date
+    position: 3
+    table: 300
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: count(partymembership.person)
+    header_text: No. of members
+    position: 4
+    table: 300
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: code
+    header_text: Code
+    position: 1
+    table: 300
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    ordering: -count(partymembership.person)
+    table: 300
+  model: data_interrogator.datatablepageorder

@@ -1,0 +1,113 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils static %}
+{% block extra_script %}
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <h1>{{ ministerialposition.name }}</h1>
+<p>Prime Minister: {{ prime_minister }}</p>
+{% if ministerialposition.description %}<div>{{ ministerialposition.description }}</div>{% endif %}
+
+
+<h3>Interactive Timeline</h3>
+<div id="visualization"></div>
+
+</div>
+<div class="row">
+Participating parties:
+<ul>
+    {% for party in ministerialposition.parties.all %}
+    <li>{{party}}</li>
+    {% endfor %}
+</ul>
+</div>
+<div class="row">
+    <h2 id="longest">Parliamentarians in this ministerialposition</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Ministry</td>
+                <td>Type</td>
+                <td>Start date</td>
+                <td>End date</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for position in ministerialposition.ministerialappointment_set.all %}
+            {% with person=position.person %}
+            <tr>
+                <td>
+                    {% ifchanged person %}
+                    {% if person.picture %}
+                        <img height="40px" src="{{ person.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'parliamentarian' person.phid %}">{{ person }}</a>
+                    {%endifchanged%}
+                </td>
+                <td>{{ position.position }}</td>
+                <td>{{ position.type }}</td>
+                <td>{{ position.start_date }} </td>
+                <td>{% if position.end_date %}
+                        {{ position.end_date }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endwith %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    var items = [];
+
+        {% for k,v in concurrent_ministerialposition_data.items %}
+            {% with minister=k.0 %}
+    
+              var item5 = document.createElement('div');
+              item5.appendChild(document.createTextNode('{{ minister.preferred_name }} {{ minister.surname }} - {{ v }}'));
+              {% if minister.picture %}
+                item5.appendChild(document.createElement('br'));
+                var img5 = document.createElement('img');
+                img5.src = '{{ minister.picture.url }}';
+                img5.style.width = '48px';
+                item5.appendChild(img5);
+              {% endif %}
+              
+            items.push(
+                {id: 'min_{{forloop.counter}}', content: item5,
+                    start: "{{ k.2 }}", end: "{{ k.3 }}",
+                    type: '', className: 'party_{{ minister.partymembership_set.first.party.code }}',
+                    group: '{{ k.1 }}'}
+            )
+            {% endwith %}
+
+        {% endfor %}
+
+  items = new vis.DataSet(items);
+  var groups = new vis.DataSet([
+      {% if cabinet %}{id: 'Cabinet', content: 'Cabinet'},{% endif %}
+      {% if inner %}{id: 'Inner', content: 'Inner'},{% endif %}
+      {% if outer %}{id: 'Outer', content: 'Outer'},{% endif %}
+      {id: 'Parliamentary Secretary', content: 'Parliamentary Secretary'},
+  ]);
+
+  var container = document.getElementById('visualization');
+  var options = {
+    // start: '{{person.first_event.start_date|date:"Y-m-d"}}',
+    // end: '{{person.date_of_death|end_or_today|date:"Y-m-d"}}',
+    zoomMin: 1000 * 60 * 60 * 24 * 7, //One week in milliseconds
+    editable: false
+  };
+
+  var timeline = new vis.Timeline(container, items, groups, options);
+
+</script>
+{% endblock %}

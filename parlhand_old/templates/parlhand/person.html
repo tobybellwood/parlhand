@@ -1,0 +1,39 @@
+{% extends 'parlhand/base.html' %}
+
+{% block main %}
+{% if person.picture %}
+<img src="{{ person.picture.url }}" height="150px"></img>
+{% endif %}
+
+<h1>{{ person.full_name }}
+    <small></small>
+</h1>
+
+<div>
+    <h2>{% if person.current_seat %}
+        {{ person.current_seat.seat_type }} for {{ person.current_seat.electorate }}{% if person.current_seat.seat_type = "Member" %}, {{ person.current_seat.electorate.state.name }}{% endif %}
+    {% else %}
+        Former parliamentarian
+    {% endif %}
+    </h2>
+    <dl>
+        <dt>Positions</dt>
+        <dl></dl>
+        <dt>Party</dt>
+        <dl></dl>
+        <dt>Chamber</dt>
+        <dl>
+            
+        </dl>
+    </dl>
+</div>
+<p>{{ person.biography }}</p>
+<p>Born: {{ person.date_of_birth }}</p>
+
+{% if person.date_of_death %}
+    <p>Died: {{ person.date_of_death }}</p>
+{% endif %}
+
+<p>Electorate: {{ person.current_seat }}</p>
+<li>Party: {{ person.current_party }}</li>
+{% endblock %}

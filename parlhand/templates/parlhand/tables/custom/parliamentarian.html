@@ -1,0 +1,8 @@
+{% load parl_utils %}
+
+<a href="{% url 'parlhand:parliamentarian' phid=data.phid %}">
+    {{ data.name }}
+</a>
+{% if request.user.is_staff %}
+    <small style="float:right"><a href="{% adminEdit suspect.model data.phid %}">[edit]</a></small>
+{% endif %}

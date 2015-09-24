@@ -1,0 +1,98 @@
+---
+title: Parties in the House of Representatives
+slug:  house-parties
+parent_slug: parties
+table: parties
+text: |
+    <blockquote>
+        <p>Quote.</p>
+        <small>Prime Minister <a href="/s/p/F4N">Andrew Fisher</a> in
+        <a href="http://primeministers.naa.gov.au/primeministers/fisher/before-office.aspx#section6">a speech to the 1908 Labor Conference</a></small>
+    </blockquote>
+    
+    <p>The number of seats of the House of Representatives is required by the
+    constitution to be "as nearly as practicable, twice the number of the senators",
+    with representatives allocated to each state based on the number of electors
+    in that state.
+    </p>
+    <p>Since Federation the <a href="/parties/parties-senate/">senate has grown
+    from 36 to 76 senators</a>, and the House of Represenatives has grown accordingly,
+    with the most recent number of Members totalling 150.
+    </p>
+    <p>Numbers in the graph below may differ slightly from these figures due to
+    electoral redistributions, retirements and early departures from service.
+    Below shows a graph of the number of party representation in the House of
+    Representatives. Each party is represented by their offical code, which is
+    displayed with their name in the table below below the graph.</p>
+    <div style="width: 100%; height: 600px; vertical-align: top; display: inline-block; padding: 10px;"><svg></svg></div>    
+scripts: |
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css" rel="stylesheet" type="text/css" />
+script: |
+    var subtotals = [];
+    var parties = {};
+
+    $.getJSON( "/api/popolo/party/?page_size=100", function( data ) {
+      $.each( data.results, function( i ) {
+        console.log(data.results[i]);
+        parties[data.results[i].code] = data.results[i];
+      });
+    });
+    
+    d3.json('/api/events/?aggregator=person__partymembership__party_id&since=1901-01-01&filter=chamber__title|Member&smooth=1&check_dates=kill_the_db&min=10&totals=True',
+        function(data) {
+        nv.addGraph(function() {
+            subtotals = data.totals
+            var items = [];
+            $.each(data.data, function(key, propdata) {
+                var keys = propdata.keys
+                var subdata = propdata.data
+                var ddd = [];
+                $.each(subdata, function(date, value) {
+                    x=new Date(date);
+                    ddd.push([x.getTime(),value])
+                    subtotals[date]= subtotals[date]-value
+                });
+                ddd.sort(function(a,b){return a[0]-b[0]})
+                items.push({key: parties[key].name, color:parties[key].primary_colour, values: ddd})
+            });
+        
+            var cleaned_subtotals = [];
+            $.each(subtotals , function(date, value) {
+                x=new Date(date);
+                cleaned_subtotals.push([x.getTime(),value])
+            });
+            cleaned_subtotals.sort(function(a,b){return a[0]-b[0]})
+            items.push({key: 'Minor parties', color:'gray', values: cleaned_subtotals })
+    
+        var chart = nv.models.multiBarChart()
+                      .x(function(d) { return d[0] })   //We can modify the data accessor functions...
+                      .y(function(d) { if (d.hasOwnProperty(1)) {return d[1]} else {console.log(d);return 0} })   //...in case your data is formatted differently.
+          .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
+          .rotateLabels(0)      //Angle to rotate x-axis labels.
+          .groupSpacing(0)    //Distance between each group of bars.
+          .stacked(true).showControls(false)
+          .duration(1000)
+        ;
+    
+    
+        //Format x-axis labels with custom function.
+        chart.xAxis
+            .tickFormat(function(d) { 
+              return d3.time.format('%d/%m/%Y')(new Date(d)) 
+        });
+    
+        chart.yAxis
+            .tickFormat(d3.format(',d'));
+    
+        d3.select('svg')
+          .datum(items)
+          .call(chart);
+    
+        //setTimeout(function(){$('.nvd3 rect[height="1"]').css("height","0")},2000)
+        nv.utils.windowResize(chart.update);
+    
+        return chart;
+      });
+    })

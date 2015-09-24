@@ -1,0 +1,13 @@
+div.multichar {
+    display:inline-block;
+    margin-right:5px;
+    border:1px solid gray;
+}
+
+div.multichar > input[type=button] {
+    margin-left:-3px;
+}
+div.multichar > input[type=text] {
+    border:none;
+    margin:0px 5px;
+}

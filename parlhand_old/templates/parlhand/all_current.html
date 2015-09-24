@@ -1,0 +1,63 @@
+{% extends 'parlhand/base.html' %}
+
+{% block main %}
+<h1>Current Senators and Members</h1>
+<ul class="visible-sm visible-xs">
+    <li><a href="#senators">Jump to senators</a></li>
+    <li><a href="#members">Jump to members</a></li>
+</ul>
+<div class="row">
+    <div class="col-md-6">
+    <h2 id="senators" class="senator">Senators</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>State</td>
+                <td>Party</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for senator in senators %}
+            <tr>
+                <td>
+                    {% if senator.picture %}
+                        <img height="40px" src="{{ senator.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'current' 'senator' senator.phid %}">{{ senator.full_name }}</a></td>
+                <td>{{ senator.current_seat.electorate.name }}</td>
+                <td>{{ senator.current_party }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div class="col-md-6">
+    <h2 id="members" class="member">Members of the House of Representatives</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Electorate</td>
+                <td>State</td>
+                <td>Party</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>
+                    {% if member.picture %}
+                        <img height="40px" src="{{ member.picture.url }}" ></img>
+                    {% endif %}
+                    <a href="{% url 'current' 'member' member.phid %}">{{ member.full_name }}</a></td>
+                <td>{{ member.current_seat.electorate.name }}</td>
+                <td>{{ member.current_seat.electorate.state.code }}</td>
+                <td>{{ member.current_party }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

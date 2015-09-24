@@ -1,0 +1,56 @@
+{% extends 'parlhand/base.html' %}
+{% load humanize %}
+{% block title %}On this day in history <small>- {{ date|date:'jS F'}}</small>{% endblock %}
+{% block meta_title %}On this day - {{ date|date:'jS F'}}{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-md-12">
+        {% if births %}
+        <h2>These parliamentarians were born:</h2>
+        <ul>
+        {% for p in births %}
+            <li>{{p.name}} - {{p.birth_date}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if service_starts %}
+        <h2>These parliamentarians started service:</h2>
+        <ul>
+        {% for s in service_starts %}
+            <li>{{s.person.name}} - {{s.start_date}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if service_ends %}
+        <h2>These parliamentarians ended service:</h2>
+        <ul>
+        {% for s in service_ends %}
+            <li>{{s.person.name}} - {{s.end_date}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if ministry_starts %}
+        <h2>These parliamentarians started service in a ministry:</h2>
+        <ul>
+        {% for s in ministry_starts %}
+            <li>{{s.person.name}} - {{s.start_date}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if ministry_ends %}
+        <h2>These parliamentarians ended service in a ministry:</h2>
+        <ul>
+        {% for s in ministry_ends %}
+            <li>{{s.person.name}} -  {{s.end_date}}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

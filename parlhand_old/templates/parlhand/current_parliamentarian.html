@@ -1,0 +1,75 @@
+{% extends 'parlhand/base.html' %}
+{% load parl_utils %}
+
+{% block main %}
+<div class="parl">
+<h1>{{ person }}
+    <small></small>
+</h1>
+
+<div class="panel panel-default {{person.current_seat.seat_type|lower}}-inverse">
+  <div class="panel-body">
+    <div style="float:right;">
+        {% if person.picture %}
+            <img src="{{ person.picture.url }}" height="150px"></img>
+        {% endif %}
+        <a href="{% url 'parliamentarian' person.phid %}" class="history_link">
+            <i class="fa fa-history"></i> View history
+        </a>
+    </div>
+    <h2>
+        {{ person.current_seat.seat_type }} for {{ person.current_seat.electorate }}{% if person.current_seat.seat_type = "Member" %}, {{ person.current_seat.electorate.state }}{% endif %}
+    </h2>
+    <dl>
+        <dt>Party</dt>
+            <dd>{{ person.current_party }}</dd>
+        <dt>Chamber</dt>
+            <dd>{{ house }}</dd>
+        <dt>Ministerial Appointments</dt>
+            <dd>
+                <ul>
+                    {% for position in person.ministerialappointment_set.current %}
+                    <li>
+                        <a style="color:lightgray" href="{% url 'ministerialposition' position.position.id %}">{{ position.position.name }}</a> from
+                        {% date_range position.start_date position.end_date %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+    </dl>
+  </div>
+</div>
+
+<h2>Biography</h2>
+<p>{{ person.biography }}</p>
+<h3>Personal</h3>
+<p>Born: {{ person.date_of_birth }}</p>
+<p>Electorate: {{ person.current_seat }}</p>
+
+        {% if person.committeemembership_set.current %}
+        <dt>Committee Memberships</dt>
+            <dd>
+                <ul>
+                    {% comment %}
+                        Regroup doesn't sort, so if the objects are pulled from the database in the wrong order this won't work properly.
+                        If this list comes out wrong, double check the default ordering of CommitteeMembership in models.py
+                    {% endcomment %}
+                    {% regroup person.committeemembership_set.current by committee.name as comms_list %}
+                    {% for comm_group in comms_list %}
+                    <li>{{ comm_group.list.0.committee.type }}: {{ comm_group.grouper }}
+                        <ul>
+                            {% for comm in comm_group.list %}
+                            <li>
+                            From {% date_range comm.start_date comm.end_date %}
+                            {% if comm.notes %}[{{ comm.notes }}]{% endif %}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </dd>
+        {% endif %}
+
+</div>
+{% endblock %}

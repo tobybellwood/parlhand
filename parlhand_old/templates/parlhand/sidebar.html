@@ -1,0 +1,127 @@
+<nav class="navbar navbar-default" id="sidebar">
+    <div class="container-fluid" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sidebarnav">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="sidebarnav">
+            <ul class="nav nav-pills nav-stacked" id="stacked-menu">
+                {% comment %}
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" href="#p1">Current Senators and Members<div class="caret-container"><span class="caret arrow"></span></div></a>    
+                  
+                  <ul class="nav nav-pills nav-stacked collapse in" id="p1">
+                    <li data-toggle="collapse" data-parent="#p1" href="#pv1">
+                      <a class="nav-sub-container">Current Parliamentarians<div class="caret-container"><span class="caret arrow"></span></div></a></li>
+                      <ul class="nav nav-pills nav-stacked collapse in" id="pv1">
+                        <li><a href="#">Senators</a></li>
+                        <li><a href="#">Members</a></li>
+                        <li class="nav-divider"></li>
+                        <li><a href="#">Trash</a></li>
+                      </ul>
+                    
+                    
+                    <li data-toggle="collapse" data-parent="#p1" href="#pv2">
+                      <a class="nav-sub-container">Your Views<div class="caret-container"><span class="caret arrow"></span></div></a></li>
+                      <ul class="nav nav-pills nav-stacked collapse in" id="pv2">
+                        <li><a href="#">View One</a></li>
+                        <li><a href="#">View Two</a></li>
+                      </ul>
+                    
+                
+                    <li data-toggle="collapse" data-parent="#p1" href="#pv3">
+                      <a class="nav-sub-container">Reports<div class="caret-container"><span class="caret arrow"></span></div></a></li>
+                      <ul class="nav nav-pills nav-stacked collapse in" id="pv3">
+                        <li><a href="#">Report One</a></li>
+                        <li><a href="#">Report Two</a></li>
+                      </ul>  
+                  </ul>
+             
+                </li>
+                {% endcomment %}
+                <li><a class="nav-container" href="/">Parliamentary Handbook</a></li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#current" href="{% url 'all_parliamentarians' %}">The 44th Parliament</a>
+                  <ul class="nav nav-pills nav-stacked collapse" id="current">
+                    <li><a href="#">The 44th Parliament</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="{% url 'current' 'senate' %}">Senators</a></li>
+                    <li><a href="{% url 'current' 'house' %}">Members</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="{% url 'current_ministry' %}">Cabinet and ministries</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#service">Service of the Nation</a>
+                  <ul class="nav nav-pills nav-stacked collapse" id="service">
+                    <li><a href="#">Parliament, War and Empire</a></li>
+                    <li><a href="#">Longest and shortest parliamentarians</a></li>
+                    <li><a href="#">Service in both chambers</a></li>
+                    <li><a href="#">Prior service</a></li>
+                    <li><a href="#">Committees service</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#elections" href="/topics">Elections and Electorates</a>
+                  <ul class="nav nav-pills nav-stacked collapse" id="elections">
+                    <li><a href="#">Elections</a></li>
+                    <li><a href="#">By-elections</a></li>
+                    <li><a href="#">Casual Vacancies</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="#">Electorates</a></li>
+                    <li><a href="#">Redistributions</a></li>
+                    <li><a href="#">Disputed</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#society" href="/topics">Parliament and society</a>
+                  <ul class="nav nav-pills nav-stacked collapse" id="society">
+                    <li><a href="{% url 'women_in_parliament' %}">Women in Parliament</a></li>
+                    <li><a href="#">Place of birth</a></li>
+                    <li><a href="#">Education</a></li>
+                    <li><a href="#">Occupation</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#parties" href="">Parties and politics</a>
+                  <ul class="nav nav-pills nav-stacked collapse" id="parties">
+                    <li><a href="#">Parties and politics</a></li>
+                    <li><a href="#">Changing parties</a></li>
+                    <li><a href="#">Crossing the floor</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#legislative" href="/topics">Legislative matters</a>
+                  <ul class="nav nav-pills nav-stacked collapse" id="legislative">
+                    <li><a href="#">Referendums</a></li>
+                    <li><a href="#">Plebicites</a></li>
+                    <li><a href="#">Reform</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a class="nav-container" data-toggle="collapse" data-parent="#stacked-menu" data-target="#openparl2point0">The Parliamentary Library and the 21st Century</a>          
+                  <ul class="nav nav-pills nav-stacked collapse" id="openparl2point0">
+                    <li><a href="{% url 'data_explorer' %}">Data Explorer</a></li>
+                    <li><a href="/api/">Parliamentarian Data API</a></li>
+                    <li><a href="#">Github</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="#">Reports</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="#">Scope of Data</a></li>
+                    <li><a href="#">History of the Handbook</a></li>
+                  </ul>
+                </li>
+                    <li class="nav-divider"></li>
+
+              {% load pages_tags %}
+            </ul>
+            <ul class="nav nav-list navlist-menu-level-0">
+              {% page_menu "pages/menus/side_menu.html" %}
+            </ul>
+        </div>
+    </div>
+</nav>

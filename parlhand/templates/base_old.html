@@ -1,0 +1,91 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+   <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=IE8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block meta_title  %}Home{% endblock %} - Parliamentary Handbook</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <script src="{% static "parlhand/progressive_enhancements.js" %}"></script>
+        {% block extra_script %}
+        {% endblock %}
+        <link href="{% static "parlhand/parlhand.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "parlhand/sidebar.css" %}" rel="stylesheet" type="text/css" />
+        <!-- link href="{% static "parlhand/paperstacks.css" %}" rel="stylesheet" type="text/css" / -->
+
+        <!-- for fancy tables -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/extensions/filter-control/bootstrap-table-filter-control.js"></script>
+        <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+
+        <script src="//rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/extensions/export/bootstrap-table-export.js"></script>
+
+        <!-- for draggables -->
+
+   </head>
+
+   <body>
+    <a class="sr-only" href="#content">Jump to content</a>
+    <nav class="main navbar navbar-inverse">
+        <div class="container-fluid" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">
+              <img src="//www.aph.gov.au/images/template/header-logo.png" alt="Parliament of Australia"></a>
+            </div>
+        
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                {% if not hide_search %}
+                    {% comment %}
+                    The search block is defined to allow some pages
+                    (SPECIFICALLY the home page) to override or hide the search bar
+                    DO NOT OVERRIDE THIS UNLESS YOU ARE CERTAIN OF WHAT YOU ARE DOING!
+                    {% endcomment %}
+                    <form id="quickSearch" action="/search" method="get"
+                    class="navbar-form navbar-left" role="search">
+                        <label style="display:none;" for="searchText">Search:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchText" name="q" accesskey="q"></input>
+                            <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit" title="Search">
+                                <i class="glyphicon glyphicon-search"></i>&nbsp;
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+   <div id='content' class="container">
+       <div class="row">
+            <div class="col-sm-4 col-md-3">
+                {% include "parlhand/sidebar.html" %}
+            </div>
+            <div class="col-sm-8 col-md-9">
+                <div class="paperstack"></div>
+                <div class="page">
+                <h1>{% block title %}{% endblock %}</h1>
+                {% block main %}{% endblock %}
+            </div>
+            </div>
+       </div>
+    </div>
+    <div class="container footer">
+        
+    {% page_menu "pages/menus/footer.html" %}
+    </div>
+   </body>
+</html>

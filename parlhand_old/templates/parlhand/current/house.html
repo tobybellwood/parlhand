@@ -1,0 +1,32 @@
+{% extends 'parlhand/base.html' %}
+
+{% block meta_title %}Current Members of the House of Representatives{% endblock %}
+
+{% block main %}
+<h1>Current Members of the House of Representatives</h1>
+<img class="img-responsive center-block" src="http://www.aph.gov.au/~/media/05%20About%20Parliament/53%20HoR/538%20Photoarray%20images/RepsChamber_floor.jpg">
+<table class="table">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Electorate</td>
+            <td>State</td>
+            <td>Party</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in parliamentarians %}
+        <tr>
+            <td>
+                {% if member.picture %}
+                    <img height="40px" src="{{ member.picture.url }}" ></img>
+                {% endif %}
+                <a href="{% url 'parliamentarian' member.phid %}">{{ member.full_name }}</a></td>
+            <td>{{ member.current_seat.electorate.name }}</td>
+            <td>{{ member.current_seat.electorate.state.code }}</td>
+            <td>{{ member.current_party }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

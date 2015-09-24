@@ -1,0 +1,49 @@
+{% load data_interrogator_tags static %}
+
+{% block extra_script %}
+  <script src="{% static "parlhand/tables.js" %}"></script>
+{% endblock %}
+
+
+<div class="interrogation_room">
+{% if count %}
+{{ count }} rows returned
+{% endif %}
+    <table class="table" data-toggle="table"
+           data-toolbar="#toolbar"
+           data-search="true"
+           data-show-filter="true"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-show-export="true"
+    >
+        <thead>
+            <tr>
+            {% if headers %}
+                {% for col,text in headers %}
+                {# Header isn't the col name, causing a conflict with suspect wrap sheet #}
+                    <th data-switchable='true' data-sortable='true'
+                    {% if suspect|has_sorter:col %}
+                        data-sorter="valsorter"
+                    {% endif %}
+                    >{{ text }}</th>
+                {% endfor %}
+            {% else %}
+                {% for col in columns %}
+                    <th data-switchable='true' data-sortable='true'>{% clean_column_name col %}</th>
+                {% endfor %}
+            {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for col in columns %}
+                    <td {% sort_value row col %}
+                    >{% wrap_sheet row col %}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,74 @@
+#visualization .vis-item-content a, #visualization .vis-item-content a:hover {
+    color:black;
+}
+.vis-item.vis-background.party_LIB, .vis-item.vis-range.party_LIB  {
+    background-color:lightblue;
+}
+.vis-item.vis-background.party_GRN {
+    color:white;
+    background-color:green;
+}
+.vis-item.vis-background.party_ALP, .vis-item.vis-range.party_ALP  {
+    color:white;
+    background-color:darkred;
+}
+.vis-item.vis-background.party_AD {
+    color:darkgreen;
+    background-color:yellow;
+}
+.vis-item.vis-background.party_PUP {
+    background-color:goldenrod;
+}
+.vis-item.vis-background.party_IND, {
+    background-color:lightgray;
+}
+
+.vis-item.vis-background.service_Senator {
+    color:white;
+    background-color: rgb(153, 80, 79);
+    border:1px solid white;
+}
+.vis-item.vis-background.service_Member {
+    color:white;
+    background-color: rgb(48, 113, 89);
+    border-left:1px solid gray;
+}
+.vis-item.vis-background.service_Member div {
+    height:140px;
+}
+
+.vis-item.committee {
+    background-color:lightgray;
+}
+
+.vis-item .vis-item-overflow:hover {
+    overflow: visible;
+    background-color:PaleGoldenrod;
+    border:none;
+}
+
+.vis-item .vis-item-overflow .vis-item-content:hover {
+    white-space: normal;
+    background-color:PaleGoldenrod;
+    border:1px solid goldenrod;
+    min-width:250px;
+    z-index:100;
+}
+
+.vis-item.vis-line.major {
+    border-width: 2px;
+}
+.vis-item.vis-dot.major {
+    border-width: 10px;
+    border-radius: 10px;
+}
+
+.vis-item.personal.vis-line {
+    border-width: 1px;
+
+}
+
+.vis-item.vis-dot.holder {
+    border-width: 0px;
+    border-radius: 0px;
+}

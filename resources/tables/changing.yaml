@@ -1,0 +1,39 @@
+- fields: {base_model: 'parlhand:Person', limit: null, title: Changing Parties}
+  model: data_interrogator.datatable
+  pk: 301
+- fields:
+    column_definition: name
+    header_text: Name
+    position: 0
+    table: 301
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: count(partymembership.party)
+    header_text: No. of parties
+    position: 1
+    table: 301
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: concat(partymembership.party.name)
+    header_text: Parties joined
+    position: 2
+    table: 301
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    column_definition: concat(partymembership.party.descendent.code)
+    header_text: Modern versions
+    position: 3
+    table: 301
+  model: data_interrogator.datatablepagecolumn
+- fields:
+    ordering: -count(partymembership.party)
+    table: 301
+  model: data_interrogator.datatablepageorder
+- fields: 
+    filter_definition: count(partymembership.party.descendent)>1
+    table: 301
+  model: data_interrogator.datatablepagefilter
+- fields: 
+    filter_definition: count(partymembership.party)>3
+    table: 301
+  model: data_interrogator.datatablepagefilter

@@ -1,0 +1,6 @@
+.item-wrapper-datatablecontent .scripts textarea,.item-wrapper-datatablecontent .script textarea{
+  display: block;
+  width: 100%;
+  font-family: monospace;
+  height:300px;
+}

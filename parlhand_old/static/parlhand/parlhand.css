@@ -1,0 +1,79 @@
+body {
+    background-image: url(//www.aph.gov.au/images/template/body-home-day-bg.jpg);
+    background-repeat: repeat-x;
+    background-color: rgb(3, 3, 3);
+}
+#content {
+    background-color:Seashell;
+}
+#lead {
+    min-height:120px;
+    background-image: url(//www.aph.gov.au/images/template/body-home-day.jpg);
+    background-size:cover;
+    color: white;
+    padding:20px;
+}
+.multi-btn {
+    position:relative;
+    top:-15px;
+    left:70px;
+}
+#lead h1 {
+    margin-top:160px;
+    text-align:right;
+}
+#mainlinks a {
+    white-space: normal;
+    height:80px;
+    box-sizing: border-box;
+}
+.multicharfield {
+    margin-top:-20px;
+    padding-bottom:3px;
+    border-bottom:1px solid lightgray;
+}
+.lineup, .interrogation_room {
+    margin:10px;
+}
+div.parl {
+    padding:10px;
+}
+.fa.handle {
+    display:table-cell;
+}
+.sortable-ghost {
+    background-color:lightgray;
+}
+
+.current dl dt {
+    float:left;
+    width:100px;
+}
+.current dl dd {
+    margin-left:100px;
+}
+.senator-inverse {
+    color:white;
+    background-color: rgb(153, 80, 79);
+}
+.senator {
+    background-color:white;
+    color: rgb(153, 80, 79);
+}
+.member-inverse {
+    color:white;
+    background-color: rgb(48, 113, 89);
+}
+.member {
+    background-color:white;
+    color: rgb(48, 113, 89);
+}
+
+a.history_link {
+    display:block;
+    color:white;
+}
+
+.footer {
+    background-color:darkgray
+}

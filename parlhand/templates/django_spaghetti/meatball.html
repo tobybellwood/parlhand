@@ -1,0 +1,20 @@
+<div class="meatball">
+<div style="border-bottom:1px solid black">
+    App: {{ model.app_label }} - Model: {{ model.model }}
+</div>
+<div style="white-space:pre-line">
+    {{ model.doc.strip }}
+</div>
+{% if fields %}
+    <b>Fields:</b>
+    <table>
+        {% for field in fields %}
+        <tr>
+            <td>{% if field.unique %}<u>{{field.name}}</u>{%else%}{{field.name}}{%endif%}</td>
+            <td><small>{{field.ftype}}</small></td>
+            <td><small>{{field.help_text}}</small></td>
+        </tr>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>

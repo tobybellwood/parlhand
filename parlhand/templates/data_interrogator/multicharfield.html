@@ -1,0 +1,12 @@
+{# custom #}
+<div class='col-sm-10 col-md-5 col-lg-3 draggable_block'>
+    <div class='input-group'>
+        <span class="input-group-addon handle fa fa-arrows" title="Drag to reorder columns"></span>
+        <input class="form-control lineup_text" type="text" value='{{value}}' title="{{value}}" name='{{name}}' {{attrs}} />
+        <span class='input-group-btn'>
+            <button class='btn btn-default' type='button' value='{{remove_text}}' title='{{remove_title}}' onclick='removeField(this);return false'>
+                <span class="fa fa-minus"></span>
+            </button>
+        </span>
+    </div>
+</div>

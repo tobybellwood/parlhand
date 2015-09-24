@@ -1,0 +1,16 @@
+---
+title: Education and Occupation
+slug:  education-occupation
+parent_slug: society
+#table: Places of Birth
+text: |
+    <blockquote>
+        <p>It is the duty of the State to educate, and the right of the people to demand education.</p>
+        <small>Commonly attributed to Australia's first Prime Minister <a href="/s/p/009LR">Edmund Barton</a></small>
+    </blockquote>
+
+    <p>
+    Parliamentarians have these.
+    </p>
+
+    <div id="visualization"></div>

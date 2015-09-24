@@ -1,0 +1,29 @@
+---
+title: Places of Birth
+slug:  origins
+parent_slug: society
+#table: Places of Birth
+text: |
+    <blockquote>
+        <p>A good quote about origins</p>
+        <small>Prime Minister <a href="/s/p/F4N">Andrew Fisher</a> in
+        <a href="http://primeministers.naa.gov.au/primeministers/fisher/before-office.aspx#section6">a speech to the 1908 Labor Conference</a></small>
+    </blockquote>
+
+    <p>
+    While in modern times most parliamentarians have been born on Australian soil, 
+    in the early colonial and federation eras many were born in England or its colonies.
+    </p>
+    
+    <p>
+    However, far from being of solely British origins Australian representatives have
+    also come from far abroad across the Pacific, with former Prime Minister
+    <a href="/s/p/F4R">Chris Watson</a> being born in Chile, and Canberra character
+    <a href="/s/p/">King O'Malley</a> born in Canada (or the United States of America depending on
+    the version of the story you prefer).
+    </p>
+
+    <div id="visualization"></div>
+    
+script: |
+    // This will be some boss map code eventually.

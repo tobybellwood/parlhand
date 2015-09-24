@@ -1,0 +1,59 @@
+---
+title: Parties and Politics
+navtitle: Parties
+slug:  parties
+parent_slug: home
+table: parties
+text: |
+    <blockquote>
+        <p>A good quote about origins</p>
+        <small>Prime Minister <a href="/s/p/F4N">Andrew Fisher</a> in
+        <a href="http://primeministers.naa.gov.au/primeministers/fisher/before-office.aspx#section6">a speech to the 1908 Labor Conference</a></small>
+    </blockquote>
+
+    <p>
+    In its short history Australia has seen over 10 separate political parties represented
+    by 10 members.
+    </p>
+    
+scripts: |
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+    <!-- link href="{% static "parlhand/timelines.css" %}" rel="stylesheet" type="text/css" / -->
+    <link href="/dyncss/party.css" rel="stylesheet" type="text/css" />
+script: |
+    var ds = [];
+    var grouping={}
+    $.getJSON( "/api/popolo/party/?page_size=100", function( data ) {
+      var today = new Date().toJSON().slice(0, 10)
+      $.each( data.results, function( i ) {
+        party = data.results[i]
+        safe_code = party.code.toLowerCase().replace(/ /g,'-')
+        safe_descendent_code = party.descendent.toLowerCase().replace(/ /g,'-')
+        ds.push(
+            {id: 'par_'+safe_code, content: '', //'<a href="/s/y/'+party.code+'">'+party.name+'</a>',
+            start: party.founding_date, end: party.dissolution_date || today,
+            group: safe_descendent_code, className: 'party_'+safe_code}
+        )
+        grouping[safe_descendent_code] = party.descendent;
+      });
+      var items = new vis.DataSet(ds);
+      var party_groups = []
+      $.each( grouping, function( k,v ) {
+        party_groups.push({id:k,content:v})
+      })
+    
+      var groups = new vis.DataSet(party_groups);
+    
+      var container = document.getElementById('visualization');
+      var this_year = new Date().getFullYear()
+      var options = {
+        start: this_year-10+'-01-01',
+        end: this_year+'-01-01',
+        zoomMin: 1000 * 60 * 60 * 24 * 7, //One week in milliseconds
+        editable: false
+      };
+    
+      var timeline = new vis.Timeline(container, items, groups, options);
+     
+    });

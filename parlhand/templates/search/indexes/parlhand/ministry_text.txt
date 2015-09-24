@@ -1,0 +1,13 @@
+{% load humanize %}
+{% with ministry=object %}
+    {{ ministry.number|ordinal }} {{ ministry.name }} Ministry
+    {{ ministry.summary }}
+    {{ ministry.description }}
+
+    {% for position in ministry.ministerialappointment_set.all %}
+        {% with person=position.person %}
+            {{ position.position.label }} {{ person.name }}
+            {{ person.given_name }} {{ person.additional_name }} {{ person.family_name }}
+        {% endwith %}
+    {% endfor %}
+{% endwith %}

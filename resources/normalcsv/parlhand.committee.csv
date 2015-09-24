@@ -1,0 +1,283 @@
+pk,name,type
+0,Environment and Heritage,House of Representatives Standing
+1,Industry and Resources,House of Representatives Standing
+2,Members Interests,House of Representatives Standing
+3,Science and Innovation,House of Representatives Standing
+4,Petitions,House of Representatives Standing
+5,Corporations and Financial Services,Joint Statutory
+6,Australian Crime Commission,Joint Statutory
+7,"ASIO, ASIS and DSD",Joint Statutory
+8,Intelligence and Security,Joint Statutory
+9,Treaties,Joint Standing
+10,"Foreign Affairs, Defence and Trade",Joint Standing
+11,House,Senate Standing
+12,Regulations and Ordinances,Senate Standing
+13,Senators' Interests,Senate Standing
+14,Procedure,Senate Standing
+15,Library,Senate Standing
+16,Privileges,Senate Standing
+17,Community Affairs: Legislation Committee,Senate Legislative and General Purpose Standing
+18,"Employment, Workplace Relations, Small Business and Education: Legislation and References Committees",Senate Legislative and General Purpose Standing
+19,"Employment, Workplace Relations and Education: Legislation and References Committees",Senate Legislative and General Purpose Standing
+20,Finance and Public Administration: Legislation Committee,Senate Legislative and General Purpose Standing
+21,Economics: Legislation Committee,Senate Legislative and General Purpose Standing
+22,Economics,Senate Legislative and General Purpose Standing
+23,Legal and Constitutional Affairs,Senate Legislative and General Purpose Standing
+24,A Certain Maritime Incident,Senate Select
+25,Free Trade Agreement - Australia and the United States of America,Senate Select
+26,Scrafton Evidence,Senate Select
+27,Intelligence and Security,Senate Select
+28,Electoral Matters,Joint Standing
+29,Parliamentary Library,Joint Standing
+30,Constitutional Recognition of Aboriginal and Torres Strait Islander Peoples,Joint Select
+31,Employment and Workplace Relations,House of Representatives Standing
+32,Family and Community Services,House of Representatives Standing
+33,Economics,House of Representatives Standing
+34,National Crime Authority,Joint Statutory
+35,Ageing,House of Representatives Standing
+36,Education and Vocational Training,House of Representatives Standing
+37,Privileges,House of Representatives Standing
+38,Procedure,House of Representatives Standing
+39,National Broadband Network,Joint Standing
+40,"Agriculture, Fisheries and Forestry",House of Representatives Standing
+41,Transport and Regional Services,House of Representatives Standing
+42,"Family, Community, Housing and Youth",House of Representatives Standing
+43,Native Title and the Aboriginal and Torres Strait Islander Land Fund,Joint Statutory
+44,Australian Commission for Law Enforcement Integrity,Joint Statutory
+45,Public Accounts and Audit,Joint Statutory
+46,Health and Ageing,House of Representatives Standing
+47,"Infrastructure, Transport, Regional Development and Local Government",House of Representatives Standing
+48,"Communications, Information Technology and the Arts",House of Representatives Standing
+49,"Industry, Science and Innovation",House of Representatives Standing
+50,Appropriations and Administration,House of Representatives Standing
+51,Broadcasting of Parliamentary Proceedings,Joint Statutory
+52,Law Enforcement,Joint Statutory
+53,Migration,Joint Standing
+54,Cyber-Safety,Joint Select
+55,Australia's Immigration Detention Network,Joint Select
+56,"Climate, Change, Water, Environment and the Arts",House of Representatives Standing
+57,"Economics, Finance and Public Administration",House of Representatives Standing
+58,Members' Interests,House of Representatives Standing
+59,Gambling Reform,Joint Select
+60,"Employment, Workplace Relations and Workforce Participation",House of Representatives Standing
+61,Library,House of Representatives Standing
+62,Education and Employment,House of Representatives Standing
+63,Public Works,Joint Statutory
+64,Publications,Senate Standing
+65,Rural and Regional Affairs and Transport: Legislation Committee,Senate Legislative and General Purpose Standing
+66,Housing Affordability in Australia,Senate Select
+67,Climate Policy,Senate Select
+68,Australia's Food Processing Sector,Senate Select
+69,National Capital and External Territories,Joint Standing
+70,Legal and Constitutional: Legislation Committee,Senate Legislative and General Purpose Standing
+71,"Foreign Affairs, Defence and Trade: Legislation and References Committees",Senate Legislative and General Purpose Standing
+72,Administration of Indigenous Affairs,Senate Select
+73,Mental Health,Senate Select
+74,Regional and Remote Indigenous Communities,Senate Select
+75,Native Title and the Aboriginal and Torres Strait Islander Land Account,Joint Statutory
+76,Scrutiny of Bills,Senate Standing
+77,"Employment, Workplace Relations and Education: Legislation Committee",Senate Legislative and General Purpose Standing
+78,"Foreign Affairs, Defence and Trade: References Committee",Senate Legislative and General Purpose Standing
+79,"Foreign Affairs, Defence and Trade",Senate Legislative and General Purpose Standing
+80,Ministerial Discretion in Migration Matters,Senate Select
+81,Education and Employment Legislation,Senate Legislative and General Purpose Standing
+82,Senators Interests,Senate Standing
+83,Appropriations and Staffing,Senate Standing
+84,Finance and Public Administration: References Committee,Senate Legislative and General Purpose Standing
+85,"Employment, Workplace Relations and Education",Senate Legislative and General Purpose Standing
+86,"Education, Employment and Workplace Relations",Senate Legislative and General Purpose Standing
+87,"Education, Employment and Workplace Relations: Legislation and References Committees",Senate Legislative and General Purpose Standing
+88,"Environment, Communications, Information Technology and the Arts: References Committee",Senate Legislative and General Purpose Standing
+89,Legal and Constitutional Affairs: Legislation Committee,Senate Legislative and General Purpose Standing
+90,Christmas Island Tragedy,Joint Select
+91,Selection of Bills,Senate Standing
+92,Community Affairs: References Committee,Senate Legislative and General Purpose Standing
+93,Community Affairs,Senate Legislative and General Purpose Standing
+94,Finance and Public Administration,Senate Legislative and General Purpose Standing
+95,Lindeberg Grievance,Senate Select
+96,Reform of the Australian Federation,Senate Select
+97,Human Rights,Joint Statutory
+98,Economics: References Committee,Senate Legislative and General Purpose Standing
+99,Superannuation,Senate Select
+100,Aboriginal Affairs,House of Representatives Standing
+101,Road Safety,House of Representatives Standing
+102,Privileges and Members? Interests,House of Representatives Standing
+103,Legal and Constitutional Affairs,House of Representatives Standing
+104,Community Affairs,House of Representatives Standing
+105,Selection,House of Representatives Standing
+106,House,House of Representatives Standing
+107,Public Accounts,Joint Statutory
+108,Australian Capital Territory,Joint Standing
+109,New Parliament House,Joint Standing
+110,Migration Regulations (formerly Joint Select),Joint Standing
+111,Human Rights,Joint Standing
+112,Aboriginal Land Rights in the Northern Territory,Joint Select
+113,Family Law Act,Joint Select
+114,Telecommunications Interception,Joint Select
+115,Expenditure,House of Representatives Standing
+116,Publications,House of Representatives Standing
+117,Family and Community Affairs,House of Representatives Standing
+118,Selection Committee,House of Representatives Standing
+119,Aboriginal and Torres Strait Islander Affairs,House of Representatives Standing
+120,Legal and Constitutional Affairs References Committee,Senate Legislative and General Purpose Standing
+121,Australia Fund Establishment,Joint Select
+122,Trade and Investment Growth,Joint Select
+123,Certain Aspects of Queensland Government Administration related to Commonwealth Government Affairs,Senate Select
+124,National Broadband Network,Senate Select
+125,Health,Senate Select
+126,Economics References Committee,Senate Legislative and General Purpose Standing
+127,Agriculture and Industry,House of Representatives Standing
+128,Tax and Revenue,House of Representatives Standing
+129,Education and Employment: Legislation and References Committees,Senate Legislative and General Purpose Standing
+130,School Funding,Senate Select
+131,Northern Australia,Joint Select
+132,Infrastructure and Communications,House of Representatives Standing
+133,Privileges and Members' Interests,House of Representatives Standing
+134,Finance and Public Administration: Legislation and References Committees,Senate Legislative and General Purpose Standing
+135,Social Policy and Legal Affairs,House of Representatives Standing
+136,Constitutional Recognition of Local Government,Joint Select
+137,Environment and Communications: Legislation and References Committees,Senate Legislative and General Purpose Standing
+138,Rural and Regional Affairs and Transport: References Committee,Senate Legislative and General Purpose Standing
+139,Abbott Government's Budget Cuts,Senate Select
+140,"Environment, Recreation and the Arts",House of Representatives Standing
+141,Communications,House of Representatives Standing
+142,Legal and Constitutional Affairs: Legislation and References Committees,Senate Legislative and General Purpose Standing
+143,"Education, Employment and Workplace Relations: References Committee",Senate Legislative and General Purpose Standing
+144,National Disability Insurance Scheme,Joint Standing
+145,Electricity Prices,Joint Select
+146,Recent Allegations relating to Conditions and Circumstances at the Regional Processing Centre in Nauru,Joint Select
+147,"Education, Employment and Workplace Relations: Legislation Committee (renamed Education and Employment Legislation Committee on 13.11.13)",Senate Legislative and General Purpose Standing
+148,DisabilityCare Australia,Joint Select
+149,Joint Standing: Delegated Legislation,State
+150,House of Representatives Standing: Privileges and Members' Interests,Federal
+151,Social Policy and Legal Affairs,Federal
+152,"Foreign Affairs, Defence and Trade: Legislation Committee",Senate Legislative and General Purpose Standing
+153,"Agriculture, Resources, Fisheries and Forestry",House of Representatives Standing
+154,Australia's Clean Energy Future Legislation,Joint Select
+155,Environment,House of Representatives Standing
+156,Environment and Communications: References Committee,Senate Legislative and General Purpose Standing
+157,Murray-Darling Basin Plan,Senate Select
+158,Economics: Legislation and References Committees,Senate Legislative and General Purpose Standing
+159,Environment and Communications: Legislation Committee,Senate Legislative and General Purpose Standing
+160,Abbott Government's Budget Cuts,Joint Select
+161,Wind Turbines,Senate Select
+162,Community Affairs: Legislation and References Committees,Senate Legislative and General Purpose Standing
+163,Recent Allegations relating to Conditions and Circumstances at the Regional Processing Centre in Nauru,Senate Select
+164,"Employment, Education and Training",House of Representatives Standing
+165,"Industry, Science and Resources",House of Representatives Standing
+166,"Transport, Communications and Infrastructure",House of Representatives Standing
+167,Electoral Matters,Joint
+168,Rural and Regional Affairs and Transport: Legislation and References Committees,Senate Legislative and General Purpose Standing
+169,"Environment, Communications, Information Technology and the Arts: Legislation Committee",Senate Legislative and General Purpose Standing
+170,Superannuation and Financial Services,Senate Select
+171,New Tax System,Senate Select
+172,Corporations and Securities,Joint Statutory
+173,Finance and Public Administration: Legislation and References Committees,Senate Standing
+174,Abbott Government's Commission of Audit,Senate Select
+175,"Transport, Communications and Infrastructure",Senate Legislative and General Purpose Standing
+176,"Environment, Recreation and the Arts",Senate Legislative and General Purpose Standing
+177,"Industry, Science and Technology",Senate Legislative and General Purpose Standing
+178,and References Committee,Senate Legislative and General Purpose Standing
+180,Health Legislation and Health Insurance,Senate Select
+181,Political Broadcasts and Political Disclosures Bill,Senate Select
+182,Subscription Television Broadcasting Services,Senate Select
+183,"Functions, Powers and Operations of the Australian Loan Council",Senate Select
+184,Intelligence Services,Joint Select
+185,Parliamentary Budget Office,Joint Select
+186,"Environment, Recreation, Communications and the Arts: Legislation Committee",Senate Legislative and General Purpose Standing
+187,"Environment, Communications, Information Technology and the Arts",Senate Legislative and General Purpose Standing
+188,"Environment, Communications and the Arts",Senate Legislative and General Purpose Standing
+189,Information Technologies,Senate Select
+190,Men's Health,Senate Select
+191,"Employment, Education and Workplace Relations",House of Representatives Standing
+192,Education and Training,House of Representatives Standing
+193,House of Representatives Standing: Family and Community Affairs,Federal
+194,Ageing,Federal
+195,Health and Ageing,Federal
+196,Health,Federal
+197,Employment and Workplace Relations,Federal
+198,"Employment, Workplace Relations and Workforce Participation",Federal
+199,Selection,Federal
+200,House,Federal
+201,Transport and Regional Services,Federal
+202,Publications,Federal
+203,"Climate Change, Environment and the Arts",Federal
+204,Appropriations and Administration,Federal
+205,Procedure,Federal
+206,Petitions,Federal
+207,Public Works,Joint Standing
+208,Republic Referendum,Joint Select
+209,Privileges (nominee of the Leader of the House),House of Representatives Standing
+210,"Climate Change, Environment and the Arts",House of Representatives Standing
+211,Lucas Heights Reactor,Senate Select
+212,Medicare,Senate Select
+213,Education and Employment: Legislation Committee,Senate Legislative and General Purpose Standing
+214,Legal and Constitutional: References Committee,Senate Legislative and General Purpose Standing
+215,Broadcasting Legislation,Joint Standing
+216,"Primary Industries, Resources and Rural and Regional Affairs",House of Representatives Standing
+217,Regional Australia,House of Representatives Standing
+218,Retailing Sector,Joint Select
+219,"Industry, Science and Technology",House of Representatives Standing
+220,Long Term Strategies,House of Representatives Standing
+221,Financial Institutions and Public Administration,House of Representatives Standing
+222,Scrutiny of New Taxes,Senate Select
+223,Broadcasting Legislation,Joint Select
+224,"Employment, Education and Training",Senate Legislative and General Purpose Standing
+225,"Employment, Education and Training: References and Legislation Committees",Senate Legislative and General Purpose Standing
+226,"Education, Employment and Workplace Relations: Legislation Committee",Senate Legislative and General Purpose Standing
+227,"Foreign Affairs, Defence and Trade: References and Legislation Committees",Senate Legislative and General Purpose Standing
+228,"Environment, Recreation, Communications and the Arts: References Committee",Senate Legislative and General Purpose Standing
+229,"Functions, Powers and Operation of the Australian Loan Council",Senate Select
+230,Certain Aspects of Foreign Ownership Decisions in relation to the Print Media,Senate Select
+231,Australian Broadcasting Corporation Management and Operations,Senate Select
+235,National Capital and External Territories,Joint Statutory
+236,Electoral Matters,Joint Statutory
+237,Gambling Reform,Joint Statutory
+238,Certain Family Law Issues,Joint Select
+239,Rural and Regional Affairs and Transport,Senate Legislative and General Purpose Standing
+240,Socio-Economic Consequences of the National Competition Policy,Senate Select
+241,Agricultural and Related Industries,Senate Select
+242,Standing: Law and Justice,State
+243,Increase in Prisoner Population,Select
+244,NSW Taxi Industry,Select
+245,Cross City Tunnel,Joint Select
+246,"Senate Legislative and General Purpose Standing: Education, Employment and Workplace Relations: Legislation and References Committees",Federal
+247,Finance and Public Administration: Legislation and References Committees,Federal
+248,Family and Human Services,House of Representatives Standing
+249,State Development (Chair),State
+250,"House of Representatives Standing: Employment, Workplace Relations and Workforce Participation",Federal
+251,Corporations and Financial Services,Joint Standing
+252,"Climate Change, Water, Environment and the Arts",House of Representatives Standing
+253,Health,House of Representatives Standing
+254,Indigenous Affairs,House of Representatives Standing
+255,Fuel and Energy,Senate Select
+256,"Environment, Communications and the Arts: Legislation and References Committees",Senate Legislative and General Purpose Standing
+257,Electricity Prices,Senate Select
+258,Cyber-Safety,Senate Select
+259,Scrutiny of Bills: Legislative Scrutiny,Senate Standing
+260,State Government Financial Management,Senate Select
+261,"Banking, Finance and Public Administration",House of Representatives Standing
+262,"Employment, Workplace Relations, Small Business and Education: References Committee",Senate Legislative and General Purpose Standing
+263,"Employment, Workplace Relations and Education: References Committee",Senate Legislative and General Purpose Standing
+264,Primary Industries and Resources,House of Representatives Standing
+265,Primary Industries and Regional Services,House of Representatives Standing
+266,Senator's Interests,Senate Standing
+267,Finance and Public Administration Legislation and References,Senate Legislative and General Purpose Standing
+268,Education and Employment: Legislation Committee (Chair,Senate Legislative and General Purpose Standing
+269,"Communications, Transport and Microeconomic Reform",House of Representatives Standing
+270,"House of Representatives Standing: Agriculture, Resources, Fisheries and Forestry",Federal
+271,Regional Australia,Federal
+272,Unresolved Whistleblower Cases,Senate Select
+273,Victorian Casino Inquiry,Senate Select
+275,Legal and Constitutional Affairs (Chair),House of Representatives Standing
+276,Family and Human Services (Chair),House of Representatives Standing
+277,House (Chair),House of Representatives Standing
+278,Selection (Chair),House of Representatives Standing
+279,Broadcasting of Parliamentary Proceedings (Chair),Joint Statutory
+280,House of Representatives Standing: Procedure,Federal
+281,Legal and Constitutional Affairs,Federal
+282,Science and Innovation,Federal
+283,Aboriginal and Torres Strait Islander Affairs,Federal
+284,"Environment, Communications, Information Technology and the Arts: Legislation and References Committees",Senate Legislative and General Purpose Standing
+285,Australian Security Intelligence Organization,Joint Statutory
+287,National Capital,Joint Standing

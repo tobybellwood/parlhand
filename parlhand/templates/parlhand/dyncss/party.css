@@ -1,0 +1,11 @@
+{% for party in objs %}
+.party_{{party.code|slugify}}, .party_{{party.code|slugify}} * {
+    color:{{party.secondary_colour}} !important;
+    background-color:{{party.primary_colour}} !important;
+}
+.party_{{party.code|slugify}}.light {
+    color:{{party.secondary_colour}} !important;
+    background-color:{{party.primary_colour}} !important;
+    opacity:0.8;
+}
+{% endfor %}

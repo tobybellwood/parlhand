@@ -1,0 +1,17 @@
+---
+title: Crossing the floor
+slug:  crossing
+parent_slug: parties
+#table: war
+text: |
+    <blockquote>
+        <p>There is bound to be a great war quote</p>
+        <small>Prime Minister <a href="/s/p/F4N">Andrew Fisher</a> in
+        <a href="http://primeministers.naa.gov.au/primeministers/fisher/before-office.aspx#section6">a speech to the 1908 Labor Conference</a></small>
+    </blockquote>
+
+    <p>
+    Crossing the floor and divisions.
+    </p>
+
+    <div id="visualization"></div>
